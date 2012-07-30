@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="Dependencies\JsonCpp\src\lib_json\json_internalarray.inl">
+      <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </None>
+    <None Include="Dependencies\JsonCpp\src\lib_json\json_internalmap.inl">
+      <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </None>
+    <None Include="Dependencies\JsonCpp\src\lib_json\json_valueiterator.inl">
+      <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </None>
+    <None Include="Dependencies\JsonCpp\src\lib_json\sconscript">
+      <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{8b9a0a97-986e-461f-9673-0fd961e310e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\JsonCpp">
+      <UniqueIdentifier>{a8ae7277-3dc4-4ec5-9056-dff33173cdef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\JsonCpp\include">
+      <UniqueIdentifier>{41ad195b-ddd0-42b9-be17-93323edae152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\JsonCpp\include\json">
+      <UniqueIdentifier>{81f9d7b1-6a81-45b0-a974-84d37df1b5b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\JsonCpp\src">
+      <UniqueIdentifier>{b1413365-e8e4-4516-aaec-faa2fe4e01d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\JsonCpp\src\lib_json">
+      <UniqueIdentifier>{34eea13a-2db0-4ae5-aa3c-3c7a619b9bd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{b88de959-ffd5-442f-a2dc-8270e0d64316}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dependencies\JsonCpp\include\json\autolink.h">
+      <Filter>Dependencies\JsonCpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\JsonCpp\include\json\config.h">
+      <Filter>Dependencies\JsonCpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\JsonCpp\include\json\features.h">
+      <Filter>Dependencies\JsonCpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\JsonCpp\include\json\forwards.h">
+      <Filter>Dependencies\JsonCpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\JsonCpp\include\json\json.h">
+      <Filter>Dependencies\JsonCpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\JsonCpp\include\json\reader.h">
+      <Filter>Dependencies\JsonCpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\JsonCpp\include\json\value.h">
+      <Filter>Dependencies\JsonCpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\JsonCpp\include\json\writer.h">
+      <Filter>Dependencies\JsonCpp\include\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\JsonCpp\src\lib_json\json_batchallocator.h">
+      <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_reader.cpp">
+      <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_value.cpp">
+      <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_writer.cpp">
+      <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

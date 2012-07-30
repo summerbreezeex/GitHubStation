@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedLib", "SharedLib\SharedLib.vcxproj", "{1BB46910-6CBA-4650-8855-9D4EF2C59FDB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSuite", "TestSuite\TestSuite.vcxproj", "{85667E09-BB86-4DB2-9FF3-40347A54780B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BB46910-6CBA-4650-8855-9D4EF2C59FDB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1BB46910-6CBA-4650-8855-9D4EF2C59FDB}.Debug|Win32.Build.0 = Debug|Win32
+		{1BB46910-6CBA-4650-8855-9D4EF2C59FDB}.Release|Win32.ActiveCfg = Release|Win32
+		{1BB46910-6CBA-4650-8855-9D4EF2C59FDB}.Release|Win32.Build.0 = Release|Win32
+		{85667E09-BB86-4DB2-9FF3-40347A54780B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{85667E09-BB86-4DB2-9FF3-40347A54780B}.Debug|Win32.Build.0 = Debug|Win32
+		{85667E09-BB86-4DB2-9FF3-40347A54780B}.Release|Win32.ActiveCfg = Release|Win32
+		{85667E09-BB86-4DB2-9FF3-40347A54780B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
