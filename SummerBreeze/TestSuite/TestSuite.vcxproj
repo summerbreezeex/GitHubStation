@@ -39,9 +39,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\SharedLib\Dependencies\JsonCpp\include;$(IncludePath)</IncludePath>
+    <IncludePath>..\SharedLib\Dependencies\JsonCpp\include;D:\MySQLSDK\MySQL\include;$(IncludePath)</IncludePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
-    <LibraryPath>D:\GitHubStation\SummerBreeze\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\GitHubStation\SummerBreeze\Debug;D:\MySqlSDK\MySQL\lib\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SharedLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SharedLib.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,10 +79,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="TestJsonCpp\TestJsonCpp.cpp" />
+    <ClCompile Include="TestMySQL\TestMySQL.cpp" />
     <ClCompile Include="TestSuite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestJsonCpp\TestJsonCpp.h" />
+    <ClInclude Include="TestMySQL\TestMySQL.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

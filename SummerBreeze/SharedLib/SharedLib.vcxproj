@@ -38,7 +38,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>.\Dependencies\JsonCpp\include;$(IncludePath)</IncludePath>
+    <IncludePath>.\Dependencies\JsonCpp\include;D:\MySQLSDK\MySQL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\MySqlSDK\MySQL\lib\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -52,6 +53,9 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>libmysql.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -87,11 +91,18 @@
     <ClInclude Include="Dependencies\JsonCpp\include\json\value.h" />
     <ClInclude Include="Dependencies\JsonCpp\include\json\writer.h" />
     <ClInclude Include="Dependencies\JsonCpp\src\lib_json\json_batchallocator.h" />
+    <ClInclude Include="Shared\MySQLdb\RecordSet.h" />
+    <ClInclude Include="Shared\MySQLdb\MySQLConnection.h" />
+    <ClInclude Include="Shared\Utils\Typedefs.h" />
+    <ClInclude Include="Shared\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_reader.cpp" />
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_value.cpp" />
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_writer.cpp" />
+    <ClCompile Include="Shared\MySQLdb\RecordSet.cpp" />
+    <ClCompile Include="Shared\MySQLdb\MySQLConnection.cpp" />
+    <ClCompile Include="Shared\Utils\Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,16 +4,25 @@
     <Filter Include="TestJsonCpp">
       <UniqueIdentifier>{0ff490a7-6355-4dd7-a073-a409ef5c2d87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestMySQL">
+      <UniqueIdentifier>{57b7ff25-cb3b-4af8-b676-5b4663d5c4e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestSuite.cpp" />
     <ClCompile Include="TestJsonCpp\TestJsonCpp.cpp">
       <Filter>TestJsonCpp</Filter>
     </ClCompile>
+    <ClCompile Include="TestMySQL\TestMySQL.cpp">
+      <Filter>TestMySQL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestJsonCpp\TestJsonCpp.h">
       <Filter>TestJsonCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMySQL\TestMySQL.h">
+      <Filter>TestMySQL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

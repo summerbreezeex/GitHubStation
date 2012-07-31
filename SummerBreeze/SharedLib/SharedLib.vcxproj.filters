@@ -37,6 +37,12 @@
     <Filter Include="Shared">
       <UniqueIdentifier>{b88de959-ffd5-442f-a2dc-8270e0d64316}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared\Utils">
+      <UniqueIdentifier>{5f05a1aa-b61d-4c22-9aaf-24cc0fd22dcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared\MySQLdb">
+      <UniqueIdentifier>{1cc74511-78d3-4c7a-80e8-35ea12f115b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\JsonCpp\include\json\autolink.h">
@@ -66,6 +72,18 @@
     <ClInclude Include="Dependencies\JsonCpp\src\lib_json\json_batchallocator.h">
       <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
     </ClInclude>
+    <ClInclude Include="Shared\Utils\Typedefs.h">
+      <Filter>Shared\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Utils\Utils.h">
+      <Filter>Shared\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\MySQLdb\MySQLConnection.h">
+      <Filter>Shared\MySQLdb</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\MySQLdb\RecordSet.h">
+      <Filter>Shared\MySQLdb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_reader.cpp">
@@ -76,6 +94,15 @@
     </ClCompile>
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_writer.cpp">
       <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Utils\Utils.cpp">
+      <Filter>Shared\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\MySQLdb\MySQLConnection.cpp">
+      <Filter>Shared\MySQLdb</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\MySQLdb\RecordSet.cpp">
+      <Filter>Shared\MySQLdb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
