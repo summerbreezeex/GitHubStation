@@ -93,6 +93,10 @@
     <ClInclude Include="Dependencies\JsonCpp\src\lib_json\json_batchallocator.h" />
     <ClInclude Include="Shared\MySQLdb\RecordSet.h" />
     <ClInclude Include="Shared\MySQLdb\MySQLConnection.h" />
+    <ClInclude Include="Shared\Serialization\PackPacket.h" />
+    <ClInclude Include="Shared\Serialization\RawPacket.h" />
+    <ClInclude Include="Shared\Serialization\UnpackPacket.h" />
+    <ClInclude Include="Shared\Utils\Noncopyable.h" />
     <ClInclude Include="Shared\Utils\Typedefs.h" />
     <ClInclude Include="Shared\Utils\Utils.h" />
   </ItemGroup>
@@ -102,6 +106,9 @@
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_writer.cpp" />
     <ClCompile Include="Shared\MySQLdb\RecordSet.cpp" />
     <ClCompile Include="Shared\MySQLdb\MySQLConnection.cpp" />
+    <ClCompile Include="Shared\Serialization\PackPacket.cpp" />
+    <ClCompile Include="Shared\Serialization\RawPacket.cpp" />
+    <ClCompile Include="Shared\Serialization\UnpackPacket.cpp" />
     <ClCompile Include="Shared\Utils\Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

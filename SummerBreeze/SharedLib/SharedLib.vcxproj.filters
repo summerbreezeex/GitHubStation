@@ -43,6 +43,9 @@
     <Filter Include="Shared\MySQLdb">
       <UniqueIdentifier>{1cc74511-78d3-4c7a-80e8-35ea12f115b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared\Serialization">
+      <UniqueIdentifier>{e57e9fd1-fb54-4a61-bc0c-9cd5da0d7a8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\JsonCpp\include\json\autolink.h">
@@ -84,6 +87,18 @@
     <ClInclude Include="Shared\MySQLdb\RecordSet.h">
       <Filter>Shared\MySQLdb</Filter>
     </ClInclude>
+    <ClInclude Include="Shared\Serialization\PackPacket.h">
+      <Filter>Shared\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Serialization\RawPacket.h">
+      <Filter>Shared\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Serialization\UnpackPacket.h">
+      <Filter>Shared\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Utils\Noncopyable.h">
+      <Filter>Shared\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_reader.cpp">
@@ -103,6 +118,15 @@
     </ClCompile>
     <ClCompile Include="Shared\MySQLdb\RecordSet.cpp">
       <Filter>Shared\MySQLdb</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Serialization\PackPacket.cpp">
+      <Filter>Shared\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Serialization\RawPacket.cpp">
+      <Filter>Shared\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Serialization\UnpackPacket.cpp">
+      <Filter>Shared\Serialization</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

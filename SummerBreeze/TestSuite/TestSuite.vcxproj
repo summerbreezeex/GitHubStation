@@ -80,11 +80,13 @@
   <ItemGroup>
     <ClCompile Include="TestJsonCpp\TestJsonCpp.cpp" />
     <ClCompile Include="TestMySQL\TestMySQL.cpp" />
+    <ClCompile Include="TestSerialization\TestSerialization.cpp" />
     <ClCompile Include="TestSuite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestJsonCpp\TestJsonCpp.h" />
     <ClInclude Include="TestMySQL\TestMySQL.h" />
+    <ClInclude Include="TestSerialization\TestSerialization.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
