@@ -14,6 +14,9 @@
     <None Include="Dependencies\JsonCpp\src\lib_json\sconscript">
       <Filter>Dependencies\JsonCpp\src\lib_json</Filter>
     </None>
+    <None Include="Shared\Utils\Singleton.inl">
+      <Filter>Shared\Utils</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Dependencies">
@@ -99,6 +102,21 @@
     <ClInclude Include="Shared\Utils\Noncopyable.h">
       <Filter>Shared\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Shared\Utils\Guard.h">
+      <Filter>Shared\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Utils\Lock.h">
+      <Filter>Shared\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Utils\SpinLock.h">
+      <Filter>Shared\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Utils\Singleton.h">
+      <Filter>Shared\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Utils\CommandBase.h">
+      <Filter>Shared\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_reader.cpp">
@@ -127,6 +145,15 @@
     </ClCompile>
     <ClCompile Include="Shared\Serialization\UnpackPacket.cpp">
       <Filter>Shared\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Utils\Guard.cpp">
+      <Filter>Shared\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Utils\SpinLock.cpp">
+      <Filter>Shared\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Utils\CommandBase.cpp">
+      <Filter>Shared\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

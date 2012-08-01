@@ -5,6 +5,12 @@
 #include <windows.h>
 #endif
 
+#undef DISALLOW_EVIL_CONSTRUCTORS
+#define DISALLOW_EVIL_CONSTRUCTORS(TypeName)    \
+	TypeName(const TypeName&);                  \
+	void operator=(const TypeName&)
+
+
 #include "Typedefs.h"
 #include "Noncopyable.h"
 
