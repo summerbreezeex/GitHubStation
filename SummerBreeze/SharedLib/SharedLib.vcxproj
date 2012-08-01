@@ -97,6 +97,7 @@
     <ClInclude Include="Shared\Serialization\PackPacket.h" />
     <ClInclude Include="Shared\Serialization\RawPacket.h" />
     <ClInclude Include="Shared\Serialization\UnpackPacket.h" />
+    <ClInclude Include="Shared\Utils\AtomicCounter.hpp" />
     <ClInclude Include="Shared\Utils\CommandBase.h" />
     <ClInclude Include="Shared\Utils\Guard.h" />
     <ClInclude Include="Shared\Utils\Lock.h" />
