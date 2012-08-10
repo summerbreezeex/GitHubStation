@@ -49,6 +49,9 @@
     <Filter Include="Shared\Serialization">
       <UniqueIdentifier>{e57e9fd1-fb54-4a61-bc0c-9cd5da0d7a8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared\Net">
+      <UniqueIdentifier>{ccf3fe91-f8ea-483a-98e3-eae15b0786c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\JsonCpp\include\json\autolink.h">
@@ -117,8 +120,86 @@
     <ClInclude Include="Shared\Utils\CommandBase.h">
       <Filter>Shared\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Shared\Utils\AtomicCounter.hpp">
-      <Filter>Shared\Utils</Filter>
+    <ClInclude Include="Shared\Net\atomic_counter.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\clock.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\command.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\epoll.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\err.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\fd.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\i_poll_events.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\io_thread.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\mailbox.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\poller.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\poller_base.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\select.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\signaler.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\mutex.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\likely.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\thread.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\platform.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\object.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\ctx.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\io_object.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\tcp_connecter.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\tcp_listener.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\tcp_socket.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\zmq_engine.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\zmq_listener.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\config.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared\Net\initsock.h">
+      <Filter>Shared\Net</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +238,60 @@
     </ClCompile>
     <ClCompile Include="Shared\Utils\CommandBase.cpp">
       <Filter>Shared\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\clock.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\command.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\epoll.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\io_thread.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\mailbox.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\poller_base.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\select.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\signaler.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\err.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\thread.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\object.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\ctx.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\io_object.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\tcp_connecter.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\tcp_listener.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\tcp_socket.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\zmq_engine.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\zmq_listener.cpp">
+      <Filter>Shared\Net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

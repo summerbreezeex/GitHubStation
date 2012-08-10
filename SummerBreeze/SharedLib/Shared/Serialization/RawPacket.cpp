@@ -6,20 +6,22 @@
 #include <malloc.h>
 
 
-RawPacket::RawPacket(const char* const data, const unsigned int size)
-:size_(size)
+RawPacket::RawPacket(const char* const data, const unsigned int size, Message_Flags flags)
+:size_(size), flags_(flags)
 {
-    if ( this->size_ > 0 ) 
-    {
-        this->data_ = (char *) malloc(size_);
+	if ( this->size_ > 0 ) 
+	{
+		this->data_ = (char*)data; 
 
-        if(this->data_ == NULL)
-        {
-            throw std::bad_alloc("out of memory RawPacket");
-        }
+		//this->data_ = (char *) malloc(size_);
 
-        memcpy(this->data_, data, this->size_);           
-    }
+		//if(this->data_ == NULL)
+		//{
+		//	throw std::bad_alloc("out of memory RawPacket");
+		//}
+
+		//memcpy(this->data_, data, this->size_);  
+	}
     else 
     {
         this->data_ = NULL;
@@ -31,13 +33,15 @@ RawPacket::RawPacket(const char* const data, const unsigned int size)
 RawPacket::RawPacket(const unsigned int initsize)
 : size_(initsize)
 {
+	this->flags_ = TO_DELETE;
+
     if ( size_ > 0 ) 
     {
         data_ = (char *) malloc(size_);
 
         if(data_ == NULL)
         {
-            //throw std::bad_alloc("out of memory BufBuilder");
+            throw std::bad_alloc("out of memory RawPacket");
         }        
     }
     else 
@@ -55,7 +59,7 @@ RawPacket::~RawPacket()
 
 void RawPacket::Kill(void)
 {
-    if (this->data_)
+    if (this->data_ && (TO_DELETE == this->flags_) )
     {
         free(data_);
         data_ = NULL;

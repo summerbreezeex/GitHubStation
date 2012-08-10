@@ -3,6 +3,18 @@
 #include <string>
 #include <vector>
 
+UnpackPacket& operator >> (UnpackPacket& stream, OpcodeBase* opcode)
+{
+	opcode->Load(stream);
+	return stream;
+}
+
+PackPacket& operator << (PackPacket& stream, OpcodeBase* opcode)
+{
+	opcode->Save(stream);
+	return stream;
+}
+
 TestSerialization::TestSerialization(void)
 {
 
@@ -142,6 +154,22 @@ int TestSerialization::Run(void)
 	std::cout << value_11 << std::endl;
 	std::cout << value_12 << std::endl;
 	std::cout << value_15 << std::endl;
+
+
+	OpcodeBase *ptr_opcode_1 = new OpcodeBase_1();
+	OpcodeBase *ptr_opcode_2 = new OpcodeBase_2();
+
+	PackPacket pack_packet_1;
+	pack_packet_1 << ptr_opcode_1;
+	pack_packet_1 << ptr_opcode_2;
+
+	ptr_opcode_1->Reset();
+	ptr_opcode_2->Reset();
+
+	UnpackPacket unpack_packet_1(pack_packet_1.Buf(), pack_packet_1.Length());
+
+	unpack_packet_1 >> ptr_opcode_1;
+	unpack_packet_1 >> ptr_opcode_2;
 
 	return 1;
 }

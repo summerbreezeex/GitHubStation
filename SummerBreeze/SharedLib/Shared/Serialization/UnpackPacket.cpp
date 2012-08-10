@@ -1,8 +1,8 @@
 #include "UnpackPacket.h"
 
 
-UnpackPacket::UnpackPacket(const char* data, unsigned int size, size_t skip_bytes) 
-:raw_packet_(data, size), read_position_(0)
+UnpackPacket::UnpackPacket(const char* data, unsigned int size,  RawPacket::Message_Flags flags, size_t skip_bytes) 
+:raw_packet_(data, size, flags), read_position_(0)
 {
     this->Skip(skip_bytes);
 }

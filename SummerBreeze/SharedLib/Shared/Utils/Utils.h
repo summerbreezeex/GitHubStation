@@ -15,7 +15,7 @@
 
 #include "Typedefs.h"
 
-#include "AtomicCounter.hpp"
+//#include "AtomicCounter.hpp"
 #include "CommandBase.h"
 #include "Guard.h"
 #include "Lock.h"
