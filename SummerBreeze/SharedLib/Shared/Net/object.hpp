@@ -70,6 +70,9 @@ namespace zmq
 		void send_register_accept (class object_t *destination_, fd_t fd_, i_poll_events *events_);
 		virtual void process_register_accept (struct command_t &cmd_);
 
+		void send_new_connections (class object_t *destination_, fd_t fd_);
+		virtual void process_new_connections (struct command_t &cmd_);
+
         //  Special handler called after a command that requires a seqnum
         //  was processed. The implementation should catch up with its counter
         //  of processed commands here.

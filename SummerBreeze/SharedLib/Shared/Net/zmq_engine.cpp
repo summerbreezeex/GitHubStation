@@ -40,10 +40,19 @@
 zmq::zmq_engine_t::zmq_engine_t (fd_t fd_) :
     plugged (false)
 {
+	//  Initialise the underlying socket.
+	int rc = tcp_socket.open (fd_, 0, 0);
+	zmq_assert (rc == 0);
 }
 
 zmq::zmq_engine_t::~zmq_engine_t ()
 {
+	std::string input;
+	UnpackPacket unpack_packet(pack_packet.Buf(), pack_packet.Length());
+	unpack_packet >> input;
+
+	std::cout << input << std::endl;
+
     zmq_assert (!plugged);
 }
 
@@ -56,7 +65,7 @@ void zmq::zmq_engine_t::plug (io_thread_t *io_thread_)
     io_object_t::plug (io_thread_);
     handle = add_fd (tcp_socket.get_fd ());
     set_pollin (handle);
-    set_pollout (handle);
+    //set_pollout (handle);
 
     //  Flush all the data that may have been already received downstream.
     in_event ();

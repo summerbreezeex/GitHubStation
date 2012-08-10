@@ -71,6 +71,7 @@ zmq::ctx_t::ctx_t (uint32_t io_threads_) :
 	}
 
 	this->ptr_acceptor = new (std::nothrow) zmq_listener_t (this->main_threads);
+	alloc_assert (ptr_acceptor);
 
 }
 

@@ -44,7 +44,7 @@ namespace zmq
         enum type_t
         {
 			invalid          = 0,//无效的
-			register_accept  = 1,//
+			register_accept  = 1,//注册监听套接字
 			new_connections  = 2,//新连接
             stop,
             plug,
@@ -72,6 +72,10 @@ namespace zmq
 				fd_t fd;
 				class i_poll_events *events;
 			} register_accept;
+
+			struct {
+				fd_t fd;
+			} new_connections;
 
             //  Sent to I/O thread to let it know that it should
             //  terminate itself.

@@ -24,6 +24,7 @@
 #include "platform.hpp"
 #include "err.hpp"
 #include "ctx.hpp"
+#include "zmq_engine.hpp"
 
 zmq::io_thread_t::io_thread_t (ctx_t *ctx_, uint32_t tid_) :
     object_t (ctx_, tid_)
@@ -104,4 +105,22 @@ void zmq::io_thread_t::process_stop ()
 {
     poller->rm_fd (mailbox_handle);
     poller->stop ();
+}
+
+void zmq::io_thread_t::process_register_accept (struct command_t &cmd_)
+{
+	poller_t::handle_t  handle = poller->add_fd (cmd_.args.register_accept.fd, cmd_.args.register_accept.events);
+	poller->set_pollin (handle);
+}
+
+void zmq::io_thread_t::process_new_connections (struct command_t &cmd_)
+{
+	fd_t fd = cmd_.args.new_connections.fd;
+
+	zmq_engine_t * ptr_engine = new (std::nothrow) zmq_engine_t(fd);
+	alloc_assert (ptr_engine);
+
+	engine_vec.push_back(ptr_engine);
+
+	ptr_engine->plug(this);
 }

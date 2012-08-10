@@ -75,12 +75,12 @@ void zmq::zmq_listener_t::in_event ()
 	errno_assert (rc == 0);
 #endif
 
-    //  Choose I/O thread to run connecter in. Given that we are already
-    //  running in an I/O thread, there must be at least one available.
-    io_thread_t *io_thread = choose_io_thread (0);
-    zmq_assert (io_thread);
+	//  Choose I/O thread to run connecter in. Given that we are already
+	//  running in an I/O thread, there must be at least one available.
+	io_thread_t *io_thread = choose_io_thread (0);
+	zmq_assert (io_thread);
 
-    //  Create and launch an init object. 
-
+	//  Create and launch an init object. 
+	this->send_new_connections(io_thread, fd);
 }
 

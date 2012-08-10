@@ -14,7 +14,7 @@
 class UnpackPacket
 {
 public:
-	UnpackPacket(const char* data,  unsigned int size, RawPacket::Message_Flags flags = RawPacket::TO_DELETE, size_t skip_bytes = 0);
+	UnpackPacket(const char* data,  unsigned int size, RawPacket::Message_Flags flags = RawPacket::DONT_DELETE, size_t skip_bytes = 0);
 	
 public:
     void Skip(size_t bytes)

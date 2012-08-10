@@ -55,15 +55,23 @@ zmq::ctx_t *zmq::object_t::get_ctx ()
 
 void zmq::object_t::process_command (command_t &cmd_)
 {
-    switch (cmd_.type) 
+	switch (cmd_.type) 
 	{
 	case command_t::register_accept:
-		process_register_accept(cmd_);
-		break;
-
-    default:
-        zmq_assert (false);
-    }
+		{
+			process_register_accept(cmd_);
+			break;
+		}
+	case command_t::new_connections:
+		{
+			process_new_connections(cmd_);
+			break;
+		}
+	default:
+		{
+			zmq_assert (false);
+		}
+	}
 
     //  The assumption here is that each command is processed once only,
     //  so deallocating it after processing is all right.
@@ -105,6 +113,20 @@ void zmq::object_t::send_register_accept (class object_t *destination_, fd_t fd_
 }
 
 void zmq::object_t::process_register_accept (struct command_t &cmd_)
+{
+
+}
+
+void zmq::object_t::send_new_connections (class object_t *destination_, fd_t fd_)
+{
+	command_t cmd;
+	cmd.destination = destination_;
+	cmd.type = command_t::new_connections;
+	cmd.args.new_connections.fd = fd_;
+	send_command (cmd);
+}
+
+void zmq::object_t::process_new_connections (struct command_t &cmd_)
 {
 
 }

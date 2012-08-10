@@ -68,11 +68,8 @@ namespace zmq
         int get_load ();
 
 	private:
-		void process_register_accept (struct command_t &cmd_)
-		{
-			poller_t::handle_t  handle = poller->add_fd (cmd_.args.register_accept.fd, cmd_.args.register_accept.events);
-			poller->set_pollin (handle);
-		}
+		void process_register_accept (struct command_t &cmd_);
+		void process_new_connections (struct command_t &cmd_);
 
     private:
 
@@ -84,6 +81,9 @@ namespace zmq
 
         //  I/O multiplexing is performed using a poller object.
         poller_t *poller;
+
+		typedef std::vector <class zmq_engine_t*> engine_vec_t;
+		engine_vec_t engine_vec;
 
         io_thread_t (const io_thread_t&);
         const io_thread_t &operator = (const io_thread_t&);
