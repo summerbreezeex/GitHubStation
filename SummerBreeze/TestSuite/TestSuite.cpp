@@ -1,14 +1,19 @@
 #include <iostream>
 #include <cstdlib>
 
+#ifdef WIN32
 #include <winsock2.h>
+#endif
 
 #include "./TestJsonCpp/TestJsonCpp.h"
 #include "./TestMySQL/TestMySQL.h"
 #include "./TestSerialization/TestSerialization.h"
 #include "./TestNetService/TestNetService.h"
 
+#ifdef WIN32
 CInitSock theSock;		// ≥ı ºªØWinsockø‚
+#endif
+
 
 int main(int argc, char **argv)
 {

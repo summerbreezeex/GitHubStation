@@ -15,7 +15,7 @@ TestNetService::~TestNetService(void)
 }
 int TestNetService::Run(void)
 {
-	ctx_t context(1);
+	ctx_t context(100);
 
 	sockaddr_in servce_addr;
 

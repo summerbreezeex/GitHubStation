@@ -4,6 +4,8 @@
 //////////////////////////////////////////////////////////
 // initsock.h文件
 
+#ifdef WIN32
+
 #include <winsock2.h>
 #pragma comment(lib, "WS2_32")	// 链接到WS2_32.lib
 
@@ -25,5 +27,7 @@ public:
 		::WSACleanup();	
 	}
 };
+
+#endif
 
 #endif

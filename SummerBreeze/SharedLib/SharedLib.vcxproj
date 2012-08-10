@@ -107,12 +107,14 @@
     <ClInclude Include="Shared\Net\io_thread.hpp" />
     <ClInclude Include="Shared\Net\i_poll_events.hpp" />
     <ClInclude Include="Shared\Net\likely.hpp" />
+    <ClInclude Include="Shared\Net\logical_thread.hpp" />
     <ClInclude Include="Shared\Net\mailbox.hpp" />
     <ClInclude Include="Shared\Net\mutex.hpp" />
     <ClInclude Include="Shared\Net\object.hpp" />
     <ClInclude Include="Shared\Net\platform.hpp" />
     <ClInclude Include="Shared\Net\poller.hpp" />
     <ClInclude Include="Shared\Net\poller_base.hpp" />
+    <ClInclude Include="Shared\Net\protocol_binary.hpp" />
     <ClInclude Include="Shared\Net\select.hpp" />
     <ClInclude Include="Shared\Net\signaler.hpp" />
     <ClInclude Include="Shared\Net\tcp_connecter.hpp" />
@@ -146,9 +148,11 @@
     <ClCompile Include="Shared\Net\err.cpp" />
     <ClCompile Include="Shared\Net\io_object.cpp" />
     <ClCompile Include="Shared\Net\io_thread.cpp" />
+    <ClCompile Include="Shared\Net\logical_thread.cpp" />
     <ClCompile Include="Shared\Net\mailbox.cpp" />
     <ClCompile Include="Shared\Net\object.cpp" />
     <ClCompile Include="Shared\Net\poller_base.cpp" />
+    <ClCompile Include="Shared\Net\protocol_binary.cpp" />
     <ClCompile Include="Shared\Net\select.cpp" />
     <ClCompile Include="Shared\Net\signaler.cpp" />
     <ClCompile Include="Shared\Net\tcp_connecter.cpp" />

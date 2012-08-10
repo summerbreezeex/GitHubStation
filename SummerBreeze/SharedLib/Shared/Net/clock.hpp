@@ -55,6 +55,8 @@ namespace zmq
         const clock_t &operator = (const clock_t&);
     };
 
+	//usleep - suspend execution for microsecond intervals  
+	extern void zmq_sleep (int microsecond_);
 }
 
 #endif
