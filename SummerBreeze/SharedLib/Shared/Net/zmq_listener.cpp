@@ -19,6 +19,7 @@
 */
 
 #include <new>
+#include <iostream>
 
 #include "zmq_listener.hpp"
 #include "io_thread.hpp"
@@ -37,6 +38,34 @@ zmq::zmq_listener_t::~zmq_listener_t ()
 int zmq::zmq_listener_t::set_address (sockaddr_in addr_, int backlog_)
 {
      return tcp_listener.set_address (addr_, backlog_);
+}
+
+int zmq::zmq_listener_t::set_address (u_short port_, const char* ip_, int backlog_)
+{
+	struct sockaddr_in s;            
+	memset(&s, 0, sizeof(struct sockaddr_in));  
+	s.sin_family = AF_INET;     
+	s.sin_port = htons(port_);   
+	s.sin_addr.s_addr = inet_addr(ip_); 
+
+	if (s.sin_addr.s_addr == INADDR_NONE)
+	{               
+		//warning gethostbyname is obsolete use new function getnameinfo            
+		std::cout << "Asking ip to DNS for %s\n" << ip_ << std::endl;
+
+		struct hostent *h = gethostbyname(ip_);                   
+		if (!h)
+		{                       
+			std::cout<<  "DNS resolution failed for %s\n" << ip_ << std::endl;
+
+			return -1;
+		}                 
+		s.sin_addr.s_addr = *((int*)(*(h->h_addr_list)));          
+	}
+
+	tcp_listener.set_address (s, backlog_);
+
+	return 0;
 }
 
 void zmq::zmq_listener_t::process_plug ()

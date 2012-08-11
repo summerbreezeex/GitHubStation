@@ -17,14 +17,14 @@ int TestNetService::Run(void)
 {
 	ctx_t context(100);
 
-	sockaddr_in servce_addr;
+	//sockaddr_in servce_addr;
 
-	// Set up the sockaddr structure
-	servce_addr.sin_family = AF_INET;
-	servce_addr.sin_port = htons(4567);
-	servce_addr.sin_addr.s_addr = htonl (INADDR_LOOPBACK);
+	//// Set up the sockaddr structure
+	//servce_addr.sin_family = AF_INET;
+	//servce_addr.sin_port = htons(4567);
+	//servce_addr.sin_addr.s_addr = htonl (INADDR_LOOPBACK);
 
-	context.acceptor()->set_address(servce_addr, 128);
+	context.acceptor()->set_address(4567, "127.0.0.1");
 	context.acceptor()->process_plug();
 
 	system("pause");

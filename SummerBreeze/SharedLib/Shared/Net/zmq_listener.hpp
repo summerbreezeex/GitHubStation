@@ -41,6 +41,9 @@ namespace zmq
         //  Set address to listen on.
         int set_address (sockaddr_in addr_, int backlog_);
 
+		//"127.0.0.1"
+		int set_address (u_short port_, const char* ip_, int backlog_ = 128);
+
         //  Handlers for incoming commands.
         void process_plug ();
         void process_term (int linger_);
