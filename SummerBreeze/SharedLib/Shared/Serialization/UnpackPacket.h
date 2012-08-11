@@ -83,6 +83,8 @@ public:
         uint32_t size = 0;
         this->operator >>(size);
 
+		vec.clear();
+
         for (uint32_t index = 0; index < size; index++)
         {
             element items;

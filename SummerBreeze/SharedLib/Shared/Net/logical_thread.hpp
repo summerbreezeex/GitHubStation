@@ -49,7 +49,7 @@ namespace zmq
         //  Ask underlying thread to stop.
         void stop ();
 
-		//生产者往producer 推数据包
+		//生产者往producer 推送数据包
 		void push (protocol_binary_t* ptr_value);
 
 	private:
