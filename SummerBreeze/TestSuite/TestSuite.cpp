@@ -9,6 +9,7 @@
 #include "./TestMySQL/TestMySQL.h"
 #include "./TestSerialization/TestSerialization.h"
 #include "./TestNetService/TestNetService.h"
+#include "./TestNetClient/TestNetClient.h"
 
 #ifdef WIN32
 CInitSock theSock;		// ≥ı ºªØWinsockø‚
@@ -28,7 +29,10 @@ int main(int argc, char **argv)
 	//TestSerialization test_serialization;
 	//test_serialization.Run();
 
-	TestNetService uint_test;
+	//TestNetService uint_test;
+	//uint_test.Run();
+
+	TestNetClient uint_test;
 	uint_test.Run();
 
 	std::cout << "Leave !" << std::endl;

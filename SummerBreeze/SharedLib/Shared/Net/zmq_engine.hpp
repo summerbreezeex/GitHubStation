@@ -51,7 +51,13 @@ namespace zmq
         void in_event ();
         void out_event ();
 
+		io_thread_t *get_io_thread ()
+		{
+			return this->io_thread;
+		}
     private:
+
+		io_thread_t *io_thread;
 
         //  Function to handle network disconnections.
         void error ();

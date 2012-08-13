@@ -79,6 +79,11 @@ namespace zmq
 		{
 			return this->main_threads;
 		}
+		
+		class logical_thread_t* logical_thread(void)
+		{
+			return this->logical_threads;
+		}
 
         class zmq_listener_t* acceptor(void)
 		{
@@ -90,7 +95,7 @@ namespace zmq
 
         enum {
             term_tid = 0,
-            main_threads_tid = 1
+            main_threads_tid = 1,
         };
 
         ~ctx_t ();
@@ -120,6 +125,7 @@ namespace zmq
         io_threads_t io_threads;
 
 		class io_thread_t* main_threads;
+		class logical_thread_t* logical_threads;
         
         zmq_listener_t* ptr_acceptor;
 

@@ -13,6 +13,9 @@
     <Filter Include="TestNetService">
       <UniqueIdentifier>{b63b71ab-5f19-4060-8d27-83bf6d44153d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestNetClient">
+      <UniqueIdentifier>{7c5d2383-d3a1-412d-a455-e3987368d459}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestSuite.cpp" />
@@ -28,6 +31,9 @@
     <ClCompile Include="TestNetService\TestNetService.cpp">
       <Filter>TestNetService</Filter>
     </ClCompile>
+    <ClCompile Include="TestNetClient\TestNetClient.cpp">
+      <Filter>TestNetClient</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestJsonCpp\TestJsonCpp.h">
@@ -41,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="TestNetService\TestNetService.h">
       <Filter>TestNetService</Filter>
+    </ClInclude>
+    <ClInclude Include="TestNetClient\TestNetClient.h">
+      <Filter>TestNetClient</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

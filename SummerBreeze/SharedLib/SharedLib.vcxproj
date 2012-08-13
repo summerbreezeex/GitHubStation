@@ -97,6 +97,7 @@
     <ClInclude Include="Shared\Net\atomic_counter.hpp" />
     <ClInclude Include="Shared\Net\clock.hpp" />
     <ClInclude Include="Shared\Net\command.hpp" />
+    <ClInclude Include="Shared\Net\concrete_protocol.hpp" />
     <ClInclude Include="Shared\Net\config.hpp" />
     <ClInclude Include="Shared\Net\ctx.hpp" />
     <ClInclude Include="Shared\Net\epoll.hpp" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Shared\MySQLdb\MySQLConnection.cpp" />
     <ClCompile Include="Shared\Net\clock.cpp" />
     <ClCompile Include="Shared\Net\command.cpp" />
+    <ClCompile Include="Shared\Net\concrete_protocol.cpp" />
     <ClCompile Include="Shared\Net\ctx.cpp" />
     <ClCompile Include="Shared\Net\epoll.cpp" />
     <ClCompile Include="Shared\Net\err.cpp" />

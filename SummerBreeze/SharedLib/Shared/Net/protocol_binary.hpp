@@ -1,6 +1,12 @@
 #ifndef __ZMQ_PTOTOCOL_BINARY_HPP_INCLUDED__
 #define __ZMQ_PTOTOCOL_BINARY_HPP_INCLUDED__
 
+#include <map>
+#include <iostream>
+#include <sstream>
+#include <new>
+#include <exception>
+
 #include "../Serialization/PackPacket.h"
 #include "../Serialization/UnpackPacket.h"
 
@@ -23,15 +29,31 @@ public:
 
 public:
 
+#pragma pack(1)
 	struct head_options_t
 	{
-		uint16_t options_length;
+		head_options_t()
+		{
+			this->options_opcode = 0;
+			this->options_values_length = 0;
+		}
+
 		uint16_t options_opcode;
+		uint16_t options_values_length;
 		std::vector<uint8_t> options_values;
 	};
 
 	struct binary_head_t
 	{
+		binary_head_t()
+		{
+			this->version = 0;
+			this->head_length = 0;
+			this->type_of_service = 0;
+			this->total_length = 0;
+			this->identification = 0;
+			this->opcode = 0;
+		}
 		uint8_t version;
 		uint16_t head_length;
 		uint8_t type_of_service;
@@ -41,9 +63,20 @@ public:
 
 		std::vector<head_options_t> options_vector;
 	};
+#pragma pack()
 
 	binary_head_t head;
 
+public:
+	static protocol_binary_t *find_and_clone(uint32_t opcode_);
+
+protected:
+	virtual protocol_binary_t *clone() = 0;
+	// As each subclass of Image is declared, it registers its prototype
+	static void add_prototype(protocol_binary_t *protocal);
+
+private:
+	static std::map<uint32_t, protocol_binary_t*> prototypes_map;
 private:
 	protocol_binary_t (const protocol_binary_t&);
 	const protocol_binary_t &operator = (const protocol_binary_t&);

@@ -60,7 +60,7 @@ uint64_t zmq::clock_t::rdtsc ()
     return 0;
 }
 
-void zmq_sleep (int microsecond_)
+void zmq::zmq_sleep (int microsecond_)
 {
 #if defined WIN32
 	Sleep (microsecond_ / 1000);

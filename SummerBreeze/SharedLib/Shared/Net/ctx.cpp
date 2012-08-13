@@ -28,6 +28,7 @@
 #include "err.hpp"
 #include "config.hpp"
 #include "zmq_listener.hpp"
+#include "logical_thread.hpp"
 
 #if !defined WIN32
 #include <unistd.h>
@@ -53,6 +54,10 @@ zmq::ctx_t::ctx_t (uint32_t io_threads_) :
 	alloc_assert (main_threads);
 	slots [main_threads_tid] = main_threads->get_mailbox ();
 	main_threads->start ();
+
+	logical_threads = new (std::nothrow) logical_thread_t();
+	alloc_assert (logical_threads);
+	logical_threads->start();
 
 	//  Create I/O thread objects and launch them.
 	for (uint32_t i = 2; i != io_threads_ + 2; i++) {

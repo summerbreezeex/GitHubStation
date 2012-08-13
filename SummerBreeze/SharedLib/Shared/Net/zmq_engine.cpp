@@ -36,10 +36,17 @@
 #include "zmq_engine.hpp"
 #include "io_thread.hpp"
 #include "err.hpp"
+#include "concrete_protocol.hpp"
+#include "logical_thread.hpp"
+
+#include "../Serialization/PackPacket.h"
+#include "../Serialization/UnpackPacket.h"
 
 zmq::zmq_engine_t::zmq_engine_t (fd_t fd_) :
     plugged (false)
 {
+	this->io_thread = NULL;
+
 	//  Initialise the underlying socket.
 	int rc = tcp_socket.open (fd_, 0, 0);
 	zmq_assert (rc == 0);
@@ -69,6 +76,8 @@ void zmq::zmq_engine_t::plug (io_thread_t *io_thread_)
 
     //  Flush all the data that may have been already received downstream.
     in_event ();
+
+	this->io_thread = io_thread_;
 }
 
 void zmq::zmq_engine_t::unplug ()
@@ -81,6 +90,8 @@ void zmq::zmq_engine_t::unplug ()
 
     //  Disconnect from I/O threads poller object.
     io_object_t::unplug ();
+
+	this->io_thread = NULL;
 
 }
 
@@ -116,6 +127,35 @@ void zmq::zmq_engine_t::in_event ()
 		else
 		{
 			pack_packet.Append(buf, count);
+
+			uint32_t length = pack_packet.Length();
+			if (length >= 8)
+			{
+				uint32_t packet_length = ((protocol_binary_t*)pack_packet.Buf())->head.total_length;
+
+				if (length >= packet_length)
+				{
+					char* ptr = pack_packet.Drain(packet_length);
+
+					UnpackPacket unpack_packet(ptr, packet_length);
+
+					protocol_binary_t* protocol_base = protocol_binary_t::find_and_clone(((protocol_binary_t*)ptr)->head.opcode);
+					if (protocol_base != NULL)
+					{
+						unpack_packet >> protocol_base;
+
+						this->io_thread->get_ctx()->logical_thread()->push(protocol_base);
+					}
+					else
+					{
+						this->error();
+					}
+					
+					delete ptr;
+					ptr = NULL;
+				}
+				
+			}
 		}
 	}
 }

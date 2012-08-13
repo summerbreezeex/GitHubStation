@@ -207,6 +207,9 @@
     <ClInclude Include="Shared\Net\protocol_binary.hpp">
       <Filter>Shared\Net</Filter>
     </ClInclude>
+    <ClInclude Include="Shared\Net\concrete_protocol.hpp">
+      <Filter>Shared\Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\JsonCpp\src\lib_json\json_reader.cpp">
@@ -303,6 +306,9 @@
       <Filter>Shared\Net</Filter>
     </ClCompile>
     <ClCompile Include="Shared\Net\protocol_binary.cpp">
+      <Filter>Shared\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared\Net\concrete_protocol.cpp">
       <Filter>Shared\Net</Filter>
     </ClCompile>
   </ItemGroup>
