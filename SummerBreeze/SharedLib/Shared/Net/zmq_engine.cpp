@@ -59,33 +59,32 @@ zmq::zmq_engine_t::~zmq_engine_t ()
 
 void zmq::zmq_engine_t::plug (io_thread_t *io_thread_)
 {
-    zmq_assert (!plugged);
-    plugged = true;
-
-    //  Connect to I/O threads poller object.
-    io_object_t::plug (io_thread_);
-    handle = add_fd (tcp_socket.get_fd ());
-    set_pollin (handle);
-    //set_pollout (handle);
-
-    //  Flush all the data that may have been already received downstream.
-    in_event ();
-
+	zmq_assert (!plugged);
+	plugged = true;
 	this->io_thread = io_thread_;
+
+	//  Connect to I/O threads poller object.
+	io_object_t::plug (io_thread_);
+	handle = add_fd (tcp_socket.get_fd ());
+	set_pollin (handle);
+	//set_pollout (handle);
+
+	//  Flush all the data that may have been already received downstream.
+	in_event ();
+
 }
 
 void zmq::zmq_engine_t::unplug ()
 {
     zmq_assert (plugged);
     plugged = false;
+	this->io_thread = NULL;
 
     //  Cancel all fd subscriptions.
     rm_fd (handle);
 
     //  Disconnect from I/O threads poller object.
     io_object_t::unplug ();
-
-	this->io_thread = NULL;
 
 }
 
@@ -112,7 +111,7 @@ void zmq::zmq_engine_t::in_event ()
 		if (count == -1)
 		{
 			this->error();
-			break;
+			return;
 		}
 		else if (count == 0)
 		{
@@ -135,7 +134,7 @@ void zmq::zmq_engine_t::in_event ()
 						if (NULL == ptr)
 						{
 							this->error();
-							break;
+							return;
 						}
 
 						uint32_t opcode = *((uint32_t*)(ptr + 12));
@@ -157,17 +156,17 @@ void zmq::zmq_engine_t::in_event ()
 								protocol_base = NULL;
 
 								this->error();
-								break;
+								return;
 							}
-							
+
 						}
 						else
 						{
 							delete ptr;
 							ptr = NULL;
-							
+
 							this->error();
-							break;
+							return;
 						}
 
 						delete ptr;
