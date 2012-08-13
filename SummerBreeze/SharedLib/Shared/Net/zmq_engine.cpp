@@ -134,7 +134,8 @@ void zmq::zmq_engine_t::in_event ()
 						char* ptr = pack_packet.Drain(packet_length);
 						if (NULL == ptr)
 						{
-							throw std::exception("null");
+							this->error();
+							break;
 						}
 
 						uint32_t opcode = *((uint32_t*)(ptr + 12));
@@ -150,13 +151,23 @@ void zmq::zmq_engine_t::in_event ()
 							{
 								this->io_thread->get_ctx()->logical_thread()->push(protocol_base);
 							}
+							else
+							{
+								delete protocol_base;
+								protocol_base = NULL;
+
+								this->error();
+								break;
+							}
 							
 						}
 						else
 						{
 							delete ptr;
 							ptr = NULL;
-							throw std::exception("not find");
+							
+							this->error();
+							break;
 						}
 
 						delete ptr;
