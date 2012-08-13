@@ -9,8 +9,6 @@ public:
 	protocol_test_t()
 	{
 		this->head.opcode = 1;
-
-		add_prototype(this);
 	}
 
 	protocol_binary_t * clone()
@@ -33,8 +31,8 @@ public:
 		std::cout << "protocol_test_t" << std::endl;
 	}
 
-private:
-	static protocol_test_t prtocol_test;
+public:
+	static protocol_test_t s_protocol_test;
 };
 
 #endif

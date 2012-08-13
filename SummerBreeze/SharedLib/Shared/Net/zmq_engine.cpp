@@ -54,12 +54,6 @@ zmq::zmq_engine_t::zmq_engine_t (fd_t fd_) :
 
 zmq::zmq_engine_t::~zmq_engine_t ()
 {
-	std::string input;
-	UnpackPacket unpack_packet(pack_packet.Buf(), pack_packet.Length());
-	unpack_packet >> input;
-
-	std::cout << input << std::endl;
-
     zmq_assert (!plugged);
 }
 
@@ -126,35 +120,62 @@ void zmq::zmq_engine_t::in_event ()
 		}
 		else
 		{
-			pack_packet.Append(buf, count);
-
-			uint32_t length = pack_packet.Length();
-			if (length >= 8)
+			try 
 			{
-				uint32_t packet_length = ((protocol_binary_t*)pack_packet.Buf())->head.total_length;
+				pack_packet.Append(buf, count);
 
-				if (length >= packet_length)
+				uint32_t length = pack_packet.Length();
+				if (length >= 16)
 				{
-					char* ptr = pack_packet.Drain(packet_length);
+					uint32_t packet_length = *((uint32_t*)(pack_packet.Buf() + 4));
 
-					UnpackPacket unpack_packet(ptr, packet_length);
-
-					protocol_binary_t* protocol_base = protocol_binary_t::find_and_clone(((protocol_binary_t*)ptr)->head.opcode);
-					if (protocol_base != NULL)
+					if (length >= packet_length)
 					{
-						unpack_packet >> protocol_base;
+						char* ptr = pack_packet.Drain(packet_length);
+						if (NULL == ptr)
+						{
+							throw std::exception("null");
+						}
 
-						this->io_thread->get_ctx()->logical_thread()->push(protocol_base);
+						uint32_t opcode = *((uint32_t*)(ptr + 12));
+
+						UnpackPacket unpack_packet(ptr, packet_length);
+
+						protocol_binary_t* protocol_base = protocol_binary_t::find_and_clone(opcode);
+						if (protocol_base != NULL)
+						{
+							unpack_packet >> protocol_base;
+
+							if (NULL != this->io_thread)
+							{
+								this->io_thread->get_ctx()->logical_thread()->push(protocol_base);
+							}
+							
+						}
+						else
+						{
+							delete ptr;
+							ptr = NULL;
+							throw std::exception("not find");
+						}
+
+						delete ptr;
+						ptr = NULL;
 					}
-					else
-					{
-						this->error();
-					}
-					
-					delete ptr;
-					ptr = NULL;
+
 				}
-				
+			}
+			catch( std::exception& e )
+			{
+				std::cout << e.what() << std::endl;
+				this->error();
+				return;
+			}
+			catch(...)
+			{
+				std::cout << "catch ..." << std::endl;
+				this->error();
+				return;
 			}
 		}
 	}

@@ -3,6 +3,8 @@
 #include "../Serialization/PackPacket.h"
 #include "../Serialization/UnpackPacket.h"
 
+#include "concrete_protocol.hpp"
+
 std::map<uint32_t, protocol_binary_t*> protocol_binary_t::prototypes_map;
 
 UnpackPacket& operator >> (UnpackPacket& stream, protocol_binary_t* opcode)
@@ -124,11 +126,16 @@ PackPacket &operator<<(PackPacket& stream, protocol_binary_t::head_options_t v)
  {
 	 std::pair<std::map<uint32_t, protocol_binary_t*>::iterator,bool> ret;
 	 ret = prototypes_map.insert(std::pair<uint32_t, protocol_binary_t*>(protocal->head.opcode, protocal));
-	 //if (!ret.second)
-	 //{
-		// std::stringstream ss;
-		// ss << "add_prototype error : " << __FILE__ << " " << __LINE__ ; 
-		// std::cout << ss.str();
-		// throw std::exception(ss.str().c_str());
-	 //}
+	 if (!ret.second)
+	 {
+		 std::stringstream ss;
+		 ss << "add_prototype error : " << __FILE__ << " " << __LINE__ ; 
+		 std::cout << ss.str();
+		 throw std::exception(ss.str().c_str());
+	 }
+ }
+
+ void protocol_binary_t::add_prototype_instance(void)
+ {
+	 add_prototype(&protocol_test_t::s_protocol_test);
  }

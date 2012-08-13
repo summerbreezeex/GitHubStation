@@ -69,6 +69,7 @@ public:
 
 public:
 	static protocol_binary_t *find_and_clone(uint32_t opcode_);
+	static void add_prototype_instance(void);
 
 protected:
 	virtual protocol_binary_t *clone() = 0;
