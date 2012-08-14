@@ -39,6 +39,13 @@ zmq::logical_thread_t::logical_thread_t () :
 
 zmq::logical_thread_t::~logical_thread_t ()
 {
+	worker.stop ();
+
+	delete producer;
+	producer = NULL;
+
+	delete consumer;
+	consumer = NULL;
 }
 
 void zmq::logical_thread_t::start ()
@@ -49,7 +56,6 @@ void zmq::logical_thread_t::start ()
 void zmq::logical_thread_t::stop ()
 {
 	stopping = true;
-	worker.stop ();
 }
 
 void zmq::logical_thread_t::worker_routine (void *arg_)

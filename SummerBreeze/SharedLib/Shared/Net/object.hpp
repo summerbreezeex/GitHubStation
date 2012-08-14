@@ -73,6 +73,9 @@ namespace zmq
 		void send_new_connections (class object_t *destination_, fd_t fd_);
 		virtual void process_new_connections (struct command_t &cmd_);
 
+		void send_stop ();
+		virtual void process_stop ();
+
         //  Special handler called after a command that requires a seqnum
         //  was processed. The implementation should catch up with its counter
         //  of processed commands here.

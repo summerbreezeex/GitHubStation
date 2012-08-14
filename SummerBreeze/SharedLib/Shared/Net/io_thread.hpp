@@ -36,6 +36,8 @@ namespace zmq
 
     class io_thread_t : public object_t, public i_poll_events
     {
+		typedef std::map <uint32_t, class zmq_engine_t*> engine_map_t;
+
     public:
 
         io_thread_t (class ctx_t *ctx_, uint32_t tid_);
@@ -67,6 +69,11 @@ namespace zmq
         //  Returns load experienced by the I/O thread.
         int get_load ();
 
+		engine_map_t& get_engine_map(void)
+		{
+			return this->engine_map;
+		}
+
 	private:
 		void process_register_accept (struct command_t &cmd_);
 		void process_new_connections (struct command_t &cmd_);
@@ -82,8 +89,12 @@ namespace zmq
         //  I/O multiplexing is performed using a poller object.
         poller_t *poller;
 
-		typedef std::vector <class zmq_engine_t*> engine_vec_t;
-		engine_vec_t engine_vec;
+		//typedef std::vector <class zmq_engine_t*> engine_vec_t;
+		//engine_vec_t engine_vec;
+
+		engine_map_t engine_map;
+
+		atomic_counter_t serial_num;
 
         io_thread_t (const io_thread_t&);
         const io_thread_t &operator = (const io_thread_t&);

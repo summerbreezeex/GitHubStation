@@ -29,7 +29,7 @@ zmq::poller_base_t::poller_base_t ()
 zmq::poller_base_t::~poller_base_t ()
 {
     //  Make sure there is no more load on the shutdown.
-    zmq_assert (get_load () == 0);
+    //zmq_assert (get_load () == 0);
 }
 
 int zmq::poller_base_t::get_load ()

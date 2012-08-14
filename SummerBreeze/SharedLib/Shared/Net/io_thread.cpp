@@ -49,7 +49,7 @@ void zmq::io_thread_t::start ()
 
 void zmq::io_thread_t::stop ()
 {
-   
+	send_stop ();
 }
 
 zmq::mailbox_t *zmq::io_thread_t::get_mailbox ()
@@ -103,6 +103,22 @@ zmq::poller_t *zmq::io_thread_t::get_poller ()
 
 void zmq::io_thread_t::process_stop ()
 {
+	std::vector<zmq_engine_t*> delete_items;
+
+	for (engine_map_t::iterator ite = this->engine_map.begin();
+		ite != this->engine_map.end();
+		ite++)
+	{
+		delete_items.push_back(ite->second);
+	}
+	
+	for (std::vector<zmq_engine_t*>::iterator del_ite = delete_items.begin();
+		del_ite != delete_items.end();
+		del_ite++)
+	{
+		(*del_ite)->terminate();
+	}
+	
     poller->rm_fd (mailbox_handle);
     poller->stop ();
 }
@@ -117,10 +133,12 @@ void zmq::io_thread_t::process_new_connections (struct command_t &cmd_)
 {
 	fd_t fd = cmd_.args.new_connections.fd;
 
-	zmq_engine_t * ptr_engine = new (std::nothrow) zmq_engine_t(fd);
+	uint32_t serial = serial_num.add(1);
+
+	zmq_engine_t * ptr_engine = new (std::nothrow) zmq_engine_t(fd, serial);
 	alloc_assert (ptr_engine);
 
-	engine_vec.push_back(ptr_engine);
+	engine_map[serial] = ptr_engine;
 
 	ptr_engine->plug(this);
 }

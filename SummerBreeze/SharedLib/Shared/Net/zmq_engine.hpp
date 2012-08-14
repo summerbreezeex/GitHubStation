@@ -39,7 +39,7 @@ namespace zmq
     {
     public:
 
-        zmq_engine_t (fd_t fd_);
+        zmq_engine_t (fd_t fd_, uint32_t serial_num_);
         ~zmq_engine_t ();
 
         //  i_engine interface implementation.
@@ -68,6 +68,8 @@ namespace zmq
         bool plugged;
 
 		PackPacket pack_packet;
+
+		uint32_t serial_num;
 
         zmq_engine_t (const zmq_engine_t&);
         const zmq_engine_t &operator = (const zmq_engine_t&);

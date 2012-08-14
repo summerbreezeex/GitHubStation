@@ -67,6 +67,11 @@ void zmq::object_t::process_command (command_t &cmd_)
 			process_new_connections(cmd_);
 			break;
 		}
+	case command_t::stop:
+		{
+			process_stop ();
+			break;
+		}
 	default:
 		{
 			zmq_assert (false);
@@ -127,6 +132,22 @@ void zmq::object_t::send_new_connections (class object_t *destination_, fd_t fd_
 }
 
 void zmq::object_t::process_new_connections (struct command_t &cmd_)
+{
+
+}
+
+void zmq::object_t::send_stop ()
+{
+	//  'stop' command goes always from administrative thread to
+	//  the current object. 
+	command_t cmd;
+
+	cmd.destination = this;
+	cmd.type = command_t::stop;
+	ctx->send_command (tid, cmd);
+}
+
+void zmq::object_t::process_stop ()
 {
 
 }

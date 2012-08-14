@@ -49,7 +49,7 @@ zmq::ctx_t::ctx_t (uint32_t io_threads_) :
 	//  Initialise the infrastructure for zmq_term thread.
 	slots [term_tid] = &term_mailbox;
 
-	//  Create the reaper thread.
+
 	main_threads = new (std::nothrow) io_thread_t (this, main_threads_tid);
 	alloc_assert (main_threads);
 	slots [main_threads_tid] = main_threads->get_mailbox ();
@@ -89,11 +89,32 @@ bool zmq::ctx_t::check_tag ()
 
 zmq::ctx_t::~ctx_t ()
 {
+
+	main_threads->stop();
+	delete main_threads;
+
+	delete ptr_acceptor;
+
+	for (io_threads_t::size_type i = 0; i != io_threads.size (); i++)
+		io_threads [i]->stop ();
+
+	//  Wait till I/O threads actually terminate.
+	for (io_threads_t::size_type i = 0; i != io_threads.size (); i++)
+		delete io_threads [i];
+
+
+	logical_threads->stop();
+	delete logical_threads;
+
+	free (slots);
+
+	//  Remove the tag, so that the object is considered dead.
+	tag = 0xdeadbeef;
 }
 
 int zmq::ctx_t::terminate ()
 {
-  return 0;
+	return 0;
 }
 
 

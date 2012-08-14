@@ -42,8 +42,9 @@
 #include "../Serialization/PackPacket.h"
 #include "../Serialization/UnpackPacket.h"
 
-zmq::zmq_engine_t::zmq_engine_t (fd_t fd_) :
-    plugged (false)
+zmq::zmq_engine_t::zmq_engine_t (fd_t fd_, uint32_t serial_num_) :
+	plugged (false),
+	serial_num(serial_num_)
 {
 	this->io_thread = NULL;
 
@@ -78,6 +79,11 @@ void zmq::zmq_engine_t::unplug ()
 {
     zmq_assert (plugged);
     plugged = false;
+	if (NULL != this->io_thread)
+	{
+		this->io_thread->get_engine_map().erase(serial_num);
+	}
+	
 	this->io_thread = NULL;
 
     //  Cancel all fd subscriptions.

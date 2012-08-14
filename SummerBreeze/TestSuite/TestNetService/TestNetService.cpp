@@ -1,5 +1,6 @@
 #include "TestNetService.h"
 
+#include <iostream>
 
 #include "../../SharedLib/Shared/Net/zmq_listener.hpp"
 using namespace zmq;
@@ -26,6 +27,7 @@ int TestNetService::Run(void)
 
 	context.acceptor()->set_address(4567, "127.0.0.1");
 	context.acceptor()->process_plug();
+
 
 	system("pause");
 
