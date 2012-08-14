@@ -124,7 +124,7 @@ void zmq::zmq_engine_t::in_event ()
 				pack_packet.Append(buf, count);
 
 				uint32_t length = pack_packet.Length();
-				if (length >= 16)
+				if (length >= 20)
 				{
 					uint32_t packet_length = *((uint32_t*)(pack_packet.Buf() + 4));
 
@@ -148,6 +148,8 @@ void zmq::zmq_engine_t::in_event ()
 
 							if (NULL != this->io_thread)
 							{
+								//ÐÞÕýÍ¨Ñ¶session
+								protocol_base->head.session = this->tcp_socket.get_fd();
 								this->io_thread->get_ctx()->logical_thread()->push(protocol_base);
 							}
 							else

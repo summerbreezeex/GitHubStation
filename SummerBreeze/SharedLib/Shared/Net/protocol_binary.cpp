@@ -45,6 +45,7 @@ PackPacket &operator<<(PackPacket& stream, protocol_binary_t::head_options_t v)
 	 stream >> v.total_length;
 	 stream >> v.identification;
 	 stream >> v.opcode;
+	 stream >> v.session;
 	 stream >> v.options_vector;
 
 	 return stream;
@@ -58,6 +59,7 @@ PackPacket &operator<<(PackPacket& stream, protocol_binary_t::head_options_t v)
 	 stream << v.total_length;
 	 stream << v.identification;
 	 stream << v.opcode;
+	 stream << v.session;
 	 stream << v.options_vector;
 
 	 return stream;

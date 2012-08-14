@@ -33,8 +33,10 @@ zmq::mailbox_t::~mailbox_t ()
 
     // Work around problem that other threads might still be in our
     // send() method, by waiting on the mutex before disappearing.
-    sync.lock ();
-    sync.unlock ();
+    //sync.lock ();
+    //sync.unlock ();
+
+	Guard guard(this->lock);
 }
 
 zmq::fd_t zmq::mailbox_t::get_fd ()
@@ -44,18 +46,19 @@ zmq::fd_t zmq::mailbox_t::get_fd ()
 
 void zmq::mailbox_t::send (const command_t &cmd_)
 {
-	sync.lock ();
+	Guard guard(this->lock);
+	//sync.lock ();
 
 	cpipe.push(cmd_);
 	signaler.send ();
 
-	sync.unlock ();
+	//sync.unlock ();
 
 }
 
 int zmq::mailbox_t::recv (command_t *cmd_, int timeout_)
 {
-
+	Guard guard(this->lock);
 	int rc = signaler.recv ();
 	if (sizeof (char) != rc)
 	{

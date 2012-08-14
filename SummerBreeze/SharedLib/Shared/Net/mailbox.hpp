@@ -30,6 +30,9 @@
 #include "command.hpp"
 #include "mutex.hpp"
 
+#include "../Utils/Guard.h"
+#include "../Utils/SpinLock.h"
+
 namespace zmq
 {
 
@@ -57,7 +60,8 @@ namespace zmq
         //  is arbitrary number of threads sending. Given that ypipe requires
         //  synchronised access on both of its endpoints, we have to synchronise
         //  the sending side.
-        mutex_t sync;
+        //mutex_t sync;
+		SpinLock lock;
 
         //  True if the underlying pipe is active, ie. when we are allowed to
         //  read commands from it.

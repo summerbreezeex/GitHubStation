@@ -10,6 +10,8 @@
 #include "../Serialization/PackPacket.h"
 #include "../Serialization/UnpackPacket.h"
 
+#include "fd.hpp"
+
 class protocol_binary_t
 {
 
@@ -53,6 +55,7 @@ public:
 			this->total_length = 0;
 			this->identification = 0;
 			this->opcode = 0;
+			this->session = 0;
 		}
 		uint8_t version;
 		uint16_t head_length;
@@ -60,6 +63,7 @@ public:
 		uint32_t total_length;
 		uint32_t identification;
 		uint32_t opcode;
+		zmq::fd_t session;
 
 		std::vector<head_options_t> options_vector;
 	};
