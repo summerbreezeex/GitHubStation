@@ -29,6 +29,7 @@
 #include "config.hpp"
 #include "zmq_listener.hpp"
 #include "logical_thread.hpp"
+#include "tcp_connecter.hpp"
 
 #if !defined WIN32
 #include <unistd.h>
@@ -150,4 +151,72 @@ void zmq::ctx_t::log (const char *format_, va_list args_)
 {
 }
 
+int  zmq::ctx_t::connect_address (u_short port_, const char* ip_, std::string session_name)
+{
+	struct sockaddr_in s;            
+	memset(&s, 0, sizeof(struct sockaddr_in));  
+	s.sin_family = AF_INET;     
+	s.sin_port = htons(port_);   
+	s.sin_addr.s_addr = inet_addr(ip_); 
 
+	if (s.sin_addr.s_addr == INADDR_NONE)
+	{               
+		//warning gethostbyname is obsolete use new function getnameinfo            
+		std::cout << "Asking ip to DNS for %s\n" << ip_ << std::endl;
+
+		struct hostent *h = gethostbyname(ip_);                   
+		if (!h)
+		{                       
+			std::cout<<  "DNS resolution failed for %s\n" << ip_ << std::endl;
+
+			return -1;
+		}                 
+		s.sin_addr.s_addr = *((int*)(*(h->h_addr_list)));          
+	}
+
+	tcp_connecter_t tcp_connecter;
+	tcp_connecter.set_address(s);
+	int rc = tcp_connecter.open();
+	if (0 != rc)
+	{
+		tcp_connecter.close();
+
+		std::cout << "connect_address error" << std::endl;
+
+		return rc;
+
+	}
+
+	fd_t fd = tcp_connecter.get_fd();
+
+	uint32_t serial = serial_num.add(1);
+
+	active_connect[session_name] = fd;
+	identify_connect[serial] = session_name;
+	
+#if defined WIN32
+	unsigned long argp = 1;
+	rc = ioctlsocket (fd, FIONBIO, &argp);
+	wsa_assert (rc != SOCKET_ERROR);
+
+#else
+	int flags = fcntl (w, F_GETFL, 0);
+	errno_assert (flags >= 0);
+	int rc = fcntl (w, F_SETFL, flags | O_NONBLOCK);
+	errno_assert (rc == 0);
+#endif
+
+	//  Choose I/O thread to run connecter in. Given that we are already
+	//  running in an I/O thread, there must be at least one available.
+	io_thread_t *io_thread = choose_io_thread (0);
+	zmq_assert (io_thread);
+
+
+	command_t cmd;
+	cmd.destination = io_thread;
+	cmd.type = command_t::new_connections;
+	cmd.args.new_connections.fd = fd;
+	this->send_command (cmd.destination->get_tid (), cmd);
+
+	return 0;
+}

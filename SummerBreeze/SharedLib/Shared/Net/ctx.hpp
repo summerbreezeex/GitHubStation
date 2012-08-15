@@ -90,6 +90,13 @@ namespace zmq
 			return this->ptr_acceptor;
 		}
 
+		std::map<std::string, fd_t>& get_active_connnect(void)
+		{
+			return this->active_connect;
+		}
+
+		int connect_address (u_short port_, const char* ip_, std::string session_name);
+
         //  Logging.
         void log (const char *format_, va_list args_);
 
@@ -136,7 +143,9 @@ namespace zmq
         //  Mailbox for zmq_term thread.
         mailbox_t term_mailbox;
 
-
+		atomic_counter_t serial_num;
+		std::map<std::string, fd_t> active_connect;
+		std::map<uint32_t, std::string> identify_connect;
 
         //  Synchronisation of access to the list of inproc endpoints.
         mutex_t endpoints_sync;

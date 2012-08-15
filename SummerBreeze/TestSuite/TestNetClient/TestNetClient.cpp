@@ -30,7 +30,7 @@ int TestNetClient::Run(void)
 		if(s == INVALID_SOCKET)
 		{
 			printf(" Failed socket() \n");
-			return 0;
+			break;
 		}
 
 		// 也可以在这里调用bind函数绑定一个本地地址
@@ -39,7 +39,7 @@ int TestNetClient::Run(void)
 		// 填写远程地址信息
 		sockaddr_in servAddr; 
 		servAddr.sin_family = AF_INET;
-		servAddr.sin_port = htons(4567);//htons(4567);
+		servAddr.sin_port = htons(9999);//htons(4567);
 
 		// 注意，这里要填写服务器程序（TCPServer程序）所在机器的IP地址
 		// 如果你的计算机没有联网，直接使用127.0.0.1即可
@@ -49,7 +49,7 @@ int TestNetClient::Run(void)
 		{
 			printf(" Failed connect() (%ld)\n",WSAGetLastError());
 
-			return 0;
+			break;
 		}
 
 		// 接收数据
@@ -68,7 +68,10 @@ int TestNetClient::Run(void)
 		PackPacket pack_packet;
 		pack_packet << ptr_protocol;
 
-		int nSend = ::send(s, pack_packet.Buf(), pack_packet.Length(), 0);
+		std::cout << "send : " << ptr_protocol->data << std::endl;
+
+		int pack_length = pack_packet.Length();
+		int nSend = ::send(s, pack_packet.Buf(), pack_length, 0);
 
 		int nReceive;
 		char buf[1024];
@@ -76,10 +79,12 @@ int TestNetClient::Run(void)
 		nReceive = ::recv(s, buf, sizeof(buf), 0);
 		if (nReceive == -1)
 		{
-			return 0;
+			std::cout << "nReceive == -1" << std::endl;
+			break;
 		}
 		else if (nReceive == 0)
 		{
+			std::cout << "nReceive == 0" << std::endl;
 			break;
 		}
 		else
@@ -99,7 +104,8 @@ int TestNetClient::Run(void)
 						char* ptr = pack_packet.Drain(packet_length);
 						if (NULL == ptr)
 						{
-							return 0;
+							std::cout << "NULL == ptr" << std::endl;
+							break;
 						}
 
 						uint32_t opcode = *((uint32_t*)(ptr + 12));
@@ -110,7 +116,7 @@ int TestNetClient::Run(void)
 						if (protocol_base != NULL)
 						{
 							unpack_packet >> protocol_base;
-							protocol_base->run();
+							std::cout <<  " data : " << ((protocol_test_t*)protocol_base)->data << std::endl;
 							delete protocol_base;
 							protocol_base = NULL;
 						}
@@ -118,7 +124,9 @@ int TestNetClient::Run(void)
 						{
 							delete ptr;
 							ptr = NULL;
-							return 0;
+							
+							std::cout << "protocol_base == NULL" << std::endl;
+							break;
 						}
 
 						delete ptr;
@@ -130,12 +138,12 @@ int TestNetClient::Run(void)
 			catch( std::exception& e )
 			{
 				std::cout << e.what() << std::endl;
-				return 0;
+				break;
 			}
 			catch(...)
 			{
 				std::cout << "catch ..." << std::endl;
-				return 0;
+				break;
 			}
 		}
 

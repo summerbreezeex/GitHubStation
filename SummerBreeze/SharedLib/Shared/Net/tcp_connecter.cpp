@@ -37,13 +37,13 @@ zmq::tcp_connecter_t::tcp_connecter_t () :
 
 zmq::tcp_connecter_t::~tcp_connecter_t ()
 {
-    if (s != retired_fd)
-        close ();
+    //if (s != retired_fd)
+    //    close ();
 }
 
 int zmq::tcp_connecter_t::set_address (sockaddr_in addr_)
 {
-	this->addr = addr;
+	this->addr = addr_;
 	this->addr_len = sizeof(this->addr);
 
 	return 0;
@@ -147,13 +147,13 @@ zmq::tcp_connecter_t::tcp_connecter_t () :
 
 zmq::tcp_connecter_t::~tcp_connecter_t ()
 {
-    if (s != retired_fd)
-        close ();
+    //if (s != retired_fd)
+    //    close ();
 }
 
 int zmq::tcp_connecter_t::set_address (sockaddr_in addr_)
 {
-	this->addr = addr;
+	this->addr = addr_;
 	this->addr_len = sizeof(this->addr);
 
     return 0;
