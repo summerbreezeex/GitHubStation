@@ -152,21 +152,63 @@ void zmq::zmq_engine_t::in_event ()
 						{
 							unpack_packet >> protocol_base;
 
-							if (NULL != this->io_thread)
+							//查看该操作码，本进程是否可以处理，可以处理就立即处理，不能处理的话就投递给路由选择处理
+							if (protocol_binary_t::registered(opcode))
 							{
-								//修正通讯session
-								protocol_base->head.session = this->tcp_socket.get_fd();
-								this->io_thread->get_ctx()->logical_thread()->push(protocol_base);
-							}
+								if (NULL != this->io_thread)
+								{
+									//修正通讯session
+									protocol_base->head.session = this->tcp_socket.get_fd();
+									this->io_thread->get_ctx()->logical_thread()->push(protocol_base);
+								}
+								else
+								{
+									delete protocol_base;
+									protocol_base = NULL;
+
+									this->error();
+									return;
+								}
+							} 
 							else
 							{
-								delete protocol_base;
-								protocol_base = NULL;
+								std::set<zmq::fd_t> fds_set;
+								bool result = protocol_binary_t::find_route(opcode, fds_set);
+								if (result)
+								{
+									for (std::set<zmq::fd_t>::iterator ite = fds_set.begin();
+										ite != fds_set.end();
+										ite++)
+									{
+										int left = packet_length;
+										int position = 0;
+										do 
+										{
+											int send_len = ::send(*ite, ptr + position, left, 0);
 
-								this->error();
-								return;
+											if (send_len == SOCKET_ERROR)
+											{
+												delete ptr;
+												ptr = NULL;
+
+												this->error();
+												return;
+											}
+											
+
+											left -= send_len;
+											position += send_len;
+
+										} while (packet_length > 0);
+										
+									}
+									
+								} 
+								else
+								{
+								}
+								
 							}
-
 						}
 						else
 						{

@@ -82,6 +82,7 @@
     <ClCompile Include="TestMySQL\TestMySQL.cpp" />
     <ClCompile Include="TestNetClient\TestNetClient.cpp" />
     <ClCompile Include="TestNetContext\TestNetContext.cpp" />
+    <ClCompile Include="TestNetGateway\TestNetGateway.cpp" />
     <ClCompile Include="TestNetService\TestNetService.cpp" />
     <ClCompile Include="TestSerialization\TestSerialization.cpp" />
     <ClCompile Include="TestSuite.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="TestMySQL\TestMySQL.h" />
     <ClInclude Include="TestNetClient\TestNetClient.h" />
     <ClInclude Include="TestNetContext\TestNetContext.h" />
+    <ClInclude Include="TestNetGateway\TestNetGateway.h" />
     <ClInclude Include="TestNetService\TestNetService.h" />
     <ClInclude Include="TestSerialization\TestSerialization.h" />
   </ItemGroup>

@@ -2,6 +2,8 @@
 #define __ZMQ_PTOTOCOL_BINARY_HPP_INCLUDED__
 
 #include <map>
+#include <set>
+#include <vector>
 #include <iostream>
 #include <sstream>
 #include <new>
@@ -55,6 +57,7 @@ public:
 			this->total_length = 0;
 			this->identification = 0;
 			this->opcode = 0;
+			this->origin_session = 0;
 			this->session = 0;
 		}
 		uint8_t version;
@@ -63,6 +66,7 @@ public:
 		uint32_t total_length;
 		uint32_t identification;
 		uint32_t opcode;
+		uint32_t origin_session;
 		zmq::fd_t session;
 
 		std::vector<head_options_t> options_vector;
@@ -75,6 +79,12 @@ public:
 	static protocol_binary_t *find_and_clone(uint32_t opcode_);
 	static void add_prototype_instance(void);
 
+	static bool find_route(uint32_t opcode, std::set<zmq::fd_t> &ref);
+	static void handle_mount(zmq::fd_t fds, std::vector<uint32_t> opcode_vec);
+
+	static bool registered(uint32_t opcode_);
+	static void add_registry(std::set<uint32_t> opcode_vec);
+
 protected:
 	virtual protocol_binary_t *clone() = 0;
 	// As each subclass of Image is declared, it registers its prototype
@@ -82,6 +92,11 @@ protected:
 
 private:
 	static std::map<uint32_t, protocol_binary_t*> prototypes_map;
+	//key:²Ù×÷Âë
+	static std::map<uint32_t, std::set<zmq::fd_t> > s_route_map;
+
+	static std::set<uint32_t> s_register_opcode;
+
 private:
 	protocol_binary_t (const protocol_binary_t&);
 	const protocol_binary_t &operator = (const protocol_binary_t&);

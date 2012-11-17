@@ -52,4 +52,40 @@ public:
 	static protocol_test_t s_protocol_test;
 };
 
+class protocol_mount_t : public protocol_binary_t
+{
+public:
+	protocol_mount_t()
+	{
+		this->head.opcode = 2;
+	}
+
+	protocol_binary_t * clone()
+	{
+		return new protocol_mount_t();
+	}
+
+public:
+	virtual void load(UnpackPacket& stream)
+	{
+		stream >> data;
+	}
+
+	virtual void save(PackPacket& stream)
+	{
+		stream << data;
+	}
+
+	virtual void run(void)
+	{
+		protocol_binary_t::handle_mount(head.session, data);
+	}
+
+public:
+	std::vector<uint32_t> data;
+
+public:
+	static protocol_mount_t s_protocol_mount;
+};
+
 #endif

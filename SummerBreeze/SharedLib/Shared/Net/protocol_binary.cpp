@@ -6,6 +6,8 @@
 #include "concrete_protocol.hpp"
 
 std::map<uint32_t, protocol_binary_t*> protocol_binary_t::prototypes_map;
+std::map<uint32_t, std::set<zmq::fd_t> > protocol_binary_t::s_route_map;
+std::set<uint32_t> protocol_binary_t::s_register_opcode;
 
 UnpackPacket& operator >> (UnpackPacket& stream, protocol_binary_t* opcode)
 {
@@ -45,6 +47,7 @@ PackPacket &operator<<(PackPacket& stream, protocol_binary_t::head_options_t v)
 	 stream >> v.total_length;
 	 stream >> v.identification;
 	 stream >> v.opcode;
+	 stream >> v.origin_session;
 	 stream >> v.session;
 	 stream >> v.options_vector;
 
@@ -59,6 +62,7 @@ PackPacket &operator<<(PackPacket& stream, protocol_binary_t::head_options_t v)
 	 stream << v.total_length;
 	 stream << v.identification;
 	 stream << v.opcode;
+	 stream << v.origin_session;
 	 stream << v.session;
 	 stream << v.options_vector;
 
@@ -140,4 +144,60 @@ PackPacket &operator<<(PackPacket& stream, protocol_binary_t::head_options_t v)
  void protocol_binary_t::add_prototype_instance(void)
  {
 	 add_prototype(&protocol_test_t::s_protocol_test);
+	 add_prototype(&protocol_mount_t::s_protocol_mount);
  }
+
+ bool protocol_binary_t::find_route(uint32_t opcode, std::set<zmq::fd_t> &ref)
+ {
+	 std::map<uint32_t, std::set<zmq::fd_t> >::iterator ite = s_route_map.find(opcode);
+	 if (ite != s_route_map.end())
+	 {
+		 ref = ite->second;
+		 return true;
+	 } 
+	 else
+	 {
+		 return false;
+	 }
+ }
+
+ void protocol_binary_t::handle_mount(zmq::fd_t fds, std::vector<uint32_t> opcode_vec)
+ {
+	 for (std::vector<uint32_t>::iterator ite = opcode_vec.begin();
+		 ite != opcode_vec.end();
+		 ite++)
+	 {
+		 std::map<uint32_t, std::set<zmq::fd_t> >::iterator set_ite = s_route_map.find(*ite);
+		 if (set_ite != s_route_map.end())
+		 {
+			 set_ite->second.insert(*ite);
+
+			 //if (set_ite->second.size() > 1)
+			 {
+				 std::cout << __FILE__ << ":" << __LINE__ << " "<< "opcode fd_t size " << set_ite->second.size() << std::endl;
+			 }
+		 } 
+		 else
+		 {
+			 std::set<zmq::fd_t> fds_set;
+			 fds_set.insert(*ite);
+
+			 s_route_map[*ite] = fds_set;
+		 }
+	 }
+ }
+
+  bool protocol_binary_t::registered(uint32_t opcode_)
+  {
+	 return s_register_opcode.count(opcode_) > 0 ? true : false;
+  }
+
+  void protocol_binary_t::add_registry(std::set<uint32_t> opcode_set)
+  {
+	  for (std::set<uint32_t>::iterator ite = opcode_set.begin();
+		  ite != opcode_set.end();
+		  ite++)
+	  {
+		  s_register_opcode.insert(*ite);
+	  }
+  }

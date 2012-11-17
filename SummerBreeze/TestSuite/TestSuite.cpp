@@ -11,6 +11,7 @@
 #include "./TestNetService/TestNetService.h"
 #include "./TestNetClient/TestNetClient.h"
 #include "./TestNetContext/TestNetContext.h"
+#include "./TestNetGateway/TestNetGateway.h"
 
 #ifdef WIN32
 CInitSock theSock;		// ≥ı ºªØWinsockø‚
@@ -36,7 +37,10 @@ int main(int argc, char **argv)
 	//TestNetClient uint_test;
 	//uint_test.Run();
 
-	TestNetContext uint_test;
+	//TestNetContext uint_test;
+	//uint_test.Run();
+
+	TestNetGateway uint_test;
 	uint_test.Run();
 
 	std::cout << "Leave !" << std::endl;

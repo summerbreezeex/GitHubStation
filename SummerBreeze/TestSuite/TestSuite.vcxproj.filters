@@ -19,6 +19,9 @@
     <Filter Include="TestNetContext">
       <UniqueIdentifier>{f5215a7c-c613-4242-acd5-8d98ed064589}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestNetGateway">
+      <UniqueIdentifier>{23c37057-ec80-474c-8c5b-e68c34df7624}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestSuite.cpp" />
@@ -40,6 +43,9 @@
     <ClCompile Include="TestNetContext\TestNetContext.cpp">
       <Filter>TestNetContext</Filter>
     </ClCompile>
+    <ClCompile Include="TestNetGateway\TestNetGateway.cpp">
+      <Filter>TestNetGateway</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestJsonCpp\TestJsonCpp.h">
@@ -59,6 +65,9 @@
     </ClInclude>
     <ClInclude Include="TestNetContext\TestNetContext.h">
       <Filter>TestNetContext</Filter>
+    </ClInclude>
+    <ClInclude Include="TestNetGateway\TestNetGateway.h">
+      <Filter>TestNetGateway</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@
     <None Include="Shared\Utils\Singleton.inl">
       <Filter>Shared\Utils</Filter>
     </None>
+    <None Include="..\..\..\Workspace\trunk\DbMerge\Stone\config.json" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Dependencies">
