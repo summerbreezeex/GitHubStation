@@ -1,0 +1,72 @@
+/*
+ Copyright (c) 2007-2011 iMatix Corporation
+ Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+
+ This file is part of 0MQ.
+
+ 0MQ is free software; you can redistribute it and/or modify it under
+ the terms of the GNU Lesser General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+
+ 0MQ is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef __SHARED_NET_OBJECT_H__
+#define __SHARED_NET_OBJECT_H__
+
+#include <stdint.h>
+
+namespace NET
+{
+	//  Base class for all objects that participate in inter-thread
+	//  communication.
+
+	class Object
+	{
+	public:
+
+		Object(class Ctx* ctx, uint32_t tid);
+		Object(Object* parent);
+		virtual ~Object();
+
+		uint32_t GetTid();
+		Ctx *GetCtx();
+		void ProcessCommand(struct Command& cmd);
+
+	protected:
+
+		//  Chooses least loaded I/O thread.
+		class IOThread *ChooseIOThread(uint64_t affinity);
+
+		//  Derived object can use these functions to send commands
+		//  to other objects.
+        void SendEtop();
+
+		//  These handlers can be overloaded by the derived objects. They are
+		//  called when command arrives from another thread.
+		virtual void ProcessStop();
+
+	private:
+
+		//  Context provides access to the global state.
+		class Ctx* ctx_;
+
+		//  Thread ID of the thread the object belongs to.
+		uint32_t tid_;
+
+		void SendCommand(Command& cmd);
+
+		Object(const Object&);
+		const Object& operator=(const Object&);
+	};
+
+}
+
+#endif

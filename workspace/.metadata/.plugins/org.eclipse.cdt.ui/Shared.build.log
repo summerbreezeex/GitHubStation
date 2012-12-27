@@ -1,0 +1,25 @@
+
+**** Build of configuration Release for project Shared ****
+
+make all 
+Building file: ../Net/Ctx.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Ctx.d" -MT"Net/Ctx.d" -o"Net/Ctx.o" "../Net/Ctx.cpp"
+Finished building: ../Net/Ctx.cpp
+ 
+Building file: ../Net/IOThread.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/IOThread.d" -MT"Net/IOThread.d" -o"Net/IOThread.o" "../Net/IOThread.cpp"
+Finished building: ../Net/IOThread.cpp
+ 
+Building file: ../Net/Object.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Object.d" -MT"Net/Object.d" -o"Net/Object.o" "../Net/Object.cpp"
+Finished building: ../Net/Object.cpp
+ 
+Building target: libShared.a
+Invoking: GCC Archiver
+ar -r "libShared.a"  ./Serialization/ByteBuffer.o  ./Net/Clock.o ./Net/Command.o ./Net/Ctx.o ./Net/Epoll.o ./Net/IOThread.o ./Net/Mailbox.o ./Net/Object.o ./Net/PollerBase.o ./Net/Signaler.o ./Net/Thread.o  ./Db/MySQLConnection.o ./Db/ResultSet.o   
+Finished building target: libShared.a
+ 
+ar: creating libShared.a

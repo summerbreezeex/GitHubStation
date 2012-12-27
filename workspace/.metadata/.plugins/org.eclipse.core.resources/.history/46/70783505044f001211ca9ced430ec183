@@ -1,0 +1,154 @@
+/*
+    Copyright (c) 2007-2011 iMatix Corporation
+    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+
+    This file is part of 0MQ.
+
+    0MQ is free software; you can redistribute it and/or modify it under
+    the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    0MQ is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+
+#include <new>
+#include <string.h>
+#include <unistd.h>
+
+#include "Ctx.h"
+
+
+
+NET::Ctx::Ctx (uint32_t io_threads) :
+    tag_(0xbadcafe0),
+    terminating_(false)
+{
+
+}
+
+bool NET::Ctx::CheckTag ()
+{
+    return tag_ == 0xbadcafe0;
+}
+
+NET::Ctx::~Ctx ()
+{
+    //  Remove the tag, so that the object is considered dead.
+    tag_ = 0xdeadbeef;
+}
+
+int NET::Ctx::Terminate ()
+{
+    return 0;
+}
+
+void NET::Ctx::SendCommand (uint32_t tid, const Command& command)
+{
+    slots [tid_]->send (command_);
+}
+
+NET::io_thread_t *NET::Ctx::ChooseIOThread (uint64_t affinity_)
+{
+    if (io_threads.empty ())
+        return NULL;
+
+    //  Find the I/O thread with minimum load.
+    int min_load = -1;
+    io_threads_t::size_type result = 0;
+    for (io_threads_t::size_type i = 0; i != io_threads.size (); i++) {
+        if (!affinity_ || (affinity_ & (uint64_t (1) << i))) {
+            int load = io_threads [i]->get_load ();
+            if (min_load == -1 || load < min_load) {
+                min_load = load;
+                result = i;
+            }
+        }
+    }
+    NET_assert (min_load != -1);
+    return io_threads [result];
+}
+
+int NET::Ctx::register_endpoint (const char *addr_, endpoint_t &endpoint_)
+{
+    endpoints_sync.lock ();
+
+    bool inserted = endpoints.insert (endpoints_t::value_type (
+        std::string (addr_), endpoint_)).second;
+    if (!inserted) {
+        errno = EADDRINUSE;
+        endpoints_sync.unlock ();
+        return -1;
+    }
+
+    endpoints_sync.unlock ();
+    return 0;
+}
+
+void NET::Ctx::unregister_endpoints (socket_base_t *socket_)
+{
+    endpoints_sync.lock ();
+
+    endpoints_t::iterator it = endpoints.begin ();
+    while (it != endpoints.end ()) {
+        if (it->second.socket == socket_) {
+            endpoints_t::iterator to_erase = it;
+            ++it;
+            endpoints.erase (to_erase);
+            continue;
+        }
+        ++it;
+    }
+
+    endpoints_sync.unlock ();
+}
+
+NET::endpoint_t NET::Ctx::find_endpoint (const char *addr_)
+{
+     endpoints_sync.lock ();
+
+     endpoints_t::iterator it = endpoints.find (addr_);
+     if (it == endpoints.end ()) {
+         endpoints_sync.unlock ();
+         errno = ECONNREFUSED;
+         endpoint_t empty = {NULL, options_t()};
+         return empty;
+     }
+     endpoint_t *endpoint = &it->second;
+
+     //  Increment the command sequence number of the peer so that it won't
+     //  get deallocated until "bind" command is issued by the caller.
+     //  The subsequent 'bind' has to be called with inc_seqnum parameter
+     //  set to false, so that the seqnum isn't incremented twice.
+     endpoint->socket->inc_seqnum ();
+
+     endpoints_sync.unlock ();
+     return *endpoint;
+}
+
+void NET::Ctx::log (const char *format_, va_list args_)
+{
+    //  Create the log message.
+    NET_msg_t msg;
+    int rc = NET_msg_init_size (&msg, strlen (format_) + 1);
+    NET_assert (rc == 0);
+    memcpy (NET_msg_data (&msg), format_, NET_msg_size (&msg));
+
+    //  At this  point we migrate the log socket to the current thread.
+    //  We rely on mutex for executing the memory barrier.
+    log_sync.lock ();
+    if (log_socket)
+        log_socket->send (&msg, 0);
+    log_sync.unlock ();
+
+    NET_msg_close (&msg);
+}
+
+

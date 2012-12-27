@@ -1,0 +1,79 @@
+/*
+ Copyright (c) 2007-2011 iMatix Corporation
+ Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+
+ This file is part of 0MQ.
+
+ 0MQ is free software; you can redistribute it and/or modify it under
+ the terms of the GNU Lesser General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+
+ 0MQ is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include <string.h>
+#include <stdarg.h>
+
+#include "Object.h"
+#include "Ctx.h"
+#include "IOThread.h"
+
+NET::Object::Object(Ctx* ctx, uint32_t tid) :
+	ctx_(ctx), tid_(tid)
+{
+}
+
+NET::Object::Object(Object* parent) :
+	ctx_(parent->ctx_), tid_(parent->tid_)
+{
+}
+
+NET::Object::~Object(void)
+{
+}
+
+uint32_t NET::Object::GetTid(void)
+{
+	return tid_;
+}
+
+NET::Ctx *NET::Object::GetCtx(void)
+{
+	return ctx_;
+}
+
+void NET::Object::ProcessCommand(Command& cmd)
+{
+	switch (cmd.type_)
+	{
+	default:
+		assert (false);
+	}
+
+	//  The assumption here is that each command is processed once only,
+	//  so deallocating it after processing is all right.
+	DeallocateCommand(&cmd);
+}
+
+NET::IOThread *NET::Object::ChooseIOThread(uint64_t affinity)
+{
+	return ctx_->ChooseIOThread(affinity);
+}
+
+void NET::Object::ProcessStop()
+{
+	assert(false);
+}
+
+void NET::Object::SendCommand(Command& cmd)
+{
+	ctx_->SendCommand(cmd.destination_->GetTid(), cmd);
+}
+

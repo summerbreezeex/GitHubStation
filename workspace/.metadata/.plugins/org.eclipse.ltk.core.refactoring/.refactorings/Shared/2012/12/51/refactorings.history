@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="将资源“Shared/Serialization/ByteBuffer”重命名为“ByteBuffer.h”" description="重命名资源“ByteBuffer”" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Serialization/ByteBuffer" name="ByteBuffer.h" stamp="1355985426452" updateReferences="true"/>
+</session>

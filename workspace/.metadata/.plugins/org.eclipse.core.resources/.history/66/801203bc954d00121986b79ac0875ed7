@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cstdlib>
+#include <string>
+
+#include "TestCase/TestCase.h"
+#include "MySQLDb/UnitTest.h"
+#include "ByteBuffer.h"
+
+int main (int argc, char *argv [])
+{
+	std::cout << "hello world !" << std::endl;
+
+
+	TestCase unit_test;
+	unit_test.Run();
+
+	ByteBuffer buffer;
+
+	uint8_t i_8 = 8;
+	buffer << i_8;
+	buffer >> i_8;
+
+	std::cout << i_8 << std::endl;
+
+	std::cout << "enter any key to end!" << std::endl;
+	std::string end;
+	std::cin >> end;
+
+	return 0;
+}

@@ -1,0 +1,117 @@
+/*
+    Copyright (c) 2007-2011 iMatix Corporation
+    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file
+
+    This file is part of 0MQ.
+
+    0MQ is free software; you can redistribute it and/or modify it under
+    the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    0MQ is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#ifndef __SHARED_NET_ATOMIC_COUNTER_H__
+#define __SHARED_NET_ATOMIC_COUNTER_H__
+
+#include <stdint.h>
+
+#include "Mutex.h"
+
+namespace NET
+{
+
+    //  This class represents an integer that can be incremented/decremented
+    //  in atomic fashion.
+
+    class AtomicCounter
+    {
+    public:
+
+        typedef uint32_t integer_t;
+
+        inline AtomicCounter(integer_t value = 0) :
+            value_(value)
+        {
+        }
+
+        inline ~AtomicCounter(void)
+        {
+        }
+
+        //  Set counter value (not thread-safe).
+        inline void Set (integer_t value)
+        {
+            value_ = value;
+        }
+
+        //  Atomic addition. Returns the old value.
+        inline integer_t Add (integer_t increment)
+        {
+            integer_t old_value;
+
+            sync_.lock ();
+            old_value = value;
+            value += increment_;
+            sync_.unlock ();
+
+            return old_value;
+        }
+
+        //  Atomic subtraction. Returns false if the counter drops to zero.
+        inline bool sub (integer_t decrement)
+        {
+#if defined ZMQ_ATOMIC_COUNTER_WINDOWS
+            LONG delta = - ((LONG) decrement);
+            integer_t old = InterlockedExchangeAdd ((LONG*) &value, delta);
+            return old - decrement != 0;
+#elif defined ZMQ_ATOMIC_COUNTER_ATOMIC_H
+            int32_t delta = - ((int32_t) decrement);
+            integer_t nv = atomic_add_32_nv (&value, delta);
+            return nv != 0;
+#elif defined ZMQ_ATOMIC_COUNTER_X86
+            integer_t oldval = -decrement;
+            volatile integer_t *val = &value;
+            __asm__ volatile ("lock; xaddl %0,%1"
+                : "=r" (oldval), "=m" (*val)
+                : "0" (oldval), "m" (*val)
+                : "cc", "memory");
+            return oldval != decrement;
+#elif defined ZMQ_ATOMIC_COUNTER_MUTEX
+            sync.lock ();
+            value -= decrement;
+            bool result = value ? true : false;
+            sync.unlock ();
+            return result;
+#else
+#error atomic_counter is not implemented for this platform
+#endif
+        }
+
+        inline integer_t get ()
+        {
+            return value;
+        }
+
+    private:
+
+        volatile integer_t value_;
+        Mutex sync_;
+
+
+        AtomicCounter (const AtomicCounter&);
+        const AtomicCounter& operator= (const AtomicCounter&);
+    };
+
+}
+
+
+#endif
+

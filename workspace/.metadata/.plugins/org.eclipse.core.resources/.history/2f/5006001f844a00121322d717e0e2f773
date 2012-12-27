@@ -1,0 +1,98 @@
+/*
+ * ByteBuffer.cpp
+ *
+ *  Created on: 2012-12-19
+ *      Author: cent
+ */
+
+#include "ByteBuffer.h"
+
+#include <assert.h>
+#include <string>
+#include <exception>
+#include <cstring>
+#include <malloc.h>
+#include <new>
+
+
+ByteBuffer::ByteBuffer(const char* const data, size_t size)
+{
+	this->buf_size_ = size;
+
+	if (this->buf_size_ > 0)
+	{
+		this->buf_ = (char*) data;
+	}
+	else
+	{
+		this->buf_ = NULL;
+	}
+
+	this->rd_pos_ = 0;
+	this->wr_pos_ = 0;
+	this->length_ = 0;
+	this->space_ = this->buf_size_;
+}
+
+ByteBuffer::ByteBuffer(size_t buf_size)
+{
+	this->buf_size_ = buf_size;
+
+	if (this->buf_size_ > 0)
+	{
+		this->buf_ = (char *) malloc(size_);
+
+		if (this->buf_ == NULL)
+		{
+			throw std::bad_alloc();
+		}
+	}
+	else
+	{
+		data_ = NULL;
+	}
+
+	this->rd_pos_ = 0;
+	this->wr_pos_ = 0;
+	this->length_ = 0;
+	this->space_ = this->buf_size_;
+}
+
+ByteBuffer::~ByteBuffer()
+{
+	Kill();
+}
+
+void ByteBuffer::Kill(void)
+{
+	if (this->data_)
+	{
+		free(data_);
+		data_ = NULL;
+	}
+}
+
+char* ByteBuffer::Buf(void)
+{
+	return this->data_;
+}
+
+const char* ByteBuffer::Buf(void) const
+{
+	return this->data_;
+}
+
+int ByteBuffer::Length(void) const
+{
+	return this->length_;
+}
+
+void ByteBuffer::Length(int length)
+{
+	this->length_ = length;
+}
+
+int ByteBuffer::Size(void) const
+{
+	return this->size_;
+}

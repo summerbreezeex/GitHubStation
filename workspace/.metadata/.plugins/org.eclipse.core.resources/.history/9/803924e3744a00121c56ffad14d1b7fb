@@ -1,0 +1,90 @@
+/*
+ * ByteBuffer.cpp
+ *
+ *  Created on: 2012-12-19
+ *      Author: cent
+ */
+
+#include "ByteBuffer.h"
+
+#include <string>
+#include <exception>
+#include <cstring>
+#include <malloc.h>
+
+
+ByteBuffer::ByteBuffer(const char* const data, const unsigned int size) :
+	size_(size), flags_(flags)
+{
+	if (this->size_ > 0)
+	{
+		this->data_ = (char*) data;
+	}
+	else
+	{
+		this->data_ = NULL;
+	}
+
+	this->length_ = this->size_;
+}
+
+ByteBuffer::ByteBuffer(const unsigned int initsize) :
+	size_(initsize)
+{
+	this->flags_ = TO_DELETE;
+
+	if (size_ > 0)
+	{
+		data_ = (char *) malloc(size_);
+
+		if (data_ == NULL)
+		{
+			throw std::bad_alloc("out of memory ByteBuffer");
+		}
+	}
+	else
+	{
+		data_ = NULL;
+	}
+
+	length_ = 0;
+}
+
+ByteBuffer::~ByteBuffer()
+{
+    Kill();
+}
+
+void ByteBuffer::Kill(void)
+{
+    if (this->data_ && (TO_DELETE == this->flags_) )
+    {
+        free(data_);
+        data_ = NULL;
+    }
+}
+
+char* ByteBuffer::Buf(void)
+{
+    return this->data_;
+}
+
+const char* ByteBuffer::Buf(void) const
+{
+    return this->data_;
+}
+
+int ByteBuffer::Length(void) const
+{
+    return this->length_;
+}
+
+void ByteBuffer::Length(int length)
+{
+    this->length_ = length;
+}
+
+int ByteBuffer::Size(void) const
+{
+    return this->size_;
+}

@@ -1,0 +1,14 @@
+#include <iostream>
+#include <cstdlib>
+#include <string>
+
+
+int main (int argc, char *argv [])
+{
+	std::cout << "hello world !" << std::endl;
+
+	std::string end;
+	std::cint >> end;
+
+	return 0;
+}
