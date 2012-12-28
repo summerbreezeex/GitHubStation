@@ -24,39 +24,56 @@
 #include <stdint.h>
 #include <string>
 
-namespace NET
+#include "../Utils/CommandBase.h"
+
+class ResultSet;
+class CommandBaseEx;
+
+namespace FREEZE_NET
 {
 
 	//  This structure defines the commands that can be sent between threads.
 
+
+	class Object;
+	class MySQLRPCClient;
+
 	struct Command
 	{
 		//  Object to process the command.
-		class Object* destination_;
+		Object* destination_;
 
 		enum CMD_TYPE
 		{
-			RPC_MYSQL_REQUEST  = 0,
-			RPC_MYSQL_RESPONSE = 1,
-			STOP               = 2,
+			STOP               = 0,
+			RPC_MYSQL_REQUEST  = 1,
+			RPC_MYSQL_RESPONSE = 2,
 		} type_;
 
 		union
 		{
 			struct
 			{
-				uint32_t type_; //Must be zero (integer). Zero means that this message is the "Request" message
+				//uint32_t type_; //Must be zero (integer). Zero means that this message is the "Request" message
 				uint32_t msg_id_;
-				unsigned char * query_statement_;
+				const char* table_;
+				const char* query_statement_;
+				CommandBaseEx* callback_cmd_;
+				ResultSet* query_result_;
+				MySQLRPCClient* request_object_;
 			} RPC_MYSQL_REQUEST;
 
 			struct
 			{
-				uint32_t type_; //Must be one (integer). One means that this message is the "Response" message
+				//uint32_t type_; //Must be one (integer). One means that this message is the "Response" message
 				uint32_t msg_id_;
-				uint8_t return_result_;
-				class ResultSet* query_result_;
+				uint32_t return_result_;
+				ResultSet* query_result_;
 			} RPC_MYSQL_RESPONSE;
+
+            struct
+            {
+            } STOP;
 
 		} args_;
 	};

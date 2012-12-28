@@ -11,6 +11,8 @@ RM := rm -rf
 -include subdir.mk
 -include TestCase/subdir.mk
 -include Serialization/subdir.mk
+-include RPCMySQL/subdir.mk
+-include Net/subdir.mk
 -include MySQLDb/subdir.mk
 -include objects.mk
 

@@ -30,7 +30,7 @@
 
 #include "Signaler.h"
 
-NET::Signaler::Signaler()
+FREEZE_NET::Signaler::Signaler()
 {
     //  Create the socketpair for signaling.
     int rc = make_fdpair(&r_, &w_);
@@ -46,18 +46,18 @@ NET::Signaler::Signaler()
     assert(rc == 0);
 }
 
-NET::Signaler::~Signaler()
+FREEZE_NET::Signaler::~Signaler()
 {
     close(w_);
     close(r_);
 }
 
-NET::fd_t NET::Signaler::GetFd()
+FREEZE_NET::fd_t FREEZE_NET::Signaler::GetFd()
 {
     return r_;
 }
 
-void NET::Signaler::Send()
+void FREEZE_NET::Signaler::Send()
 {
     unsigned char dummy = 0;
     while (true)
@@ -72,18 +72,21 @@ void NET::Signaler::Send()
     }
 }
 
-void NET::Signaler::Recv()
+void FREEZE_NET::Signaler::Recv()
 {
     //  Attempt to read a signal.
     unsigned char dummy;
     ssize_t nbytes = ::recv(r_, &dummy, sizeof(dummy), 0);
-    assert(nbytes >= 0);
+    if (nbytes == -1 && (errno == EAGAIN || errno == EINTR))
+    {
+    	return;
+    }
 
     assert(nbytes == sizeof(dummy));
     assert(dummy == 0);
 }
 
-int NET::Signaler::make_fdpair(fd_t *r, fd_t *w)
+int FREEZE_NET::Signaler::make_fdpair(fd_t *r, fd_t *w)
 {
     int sv [2];
     int rc = socketpair(AF_UNIX, SOCK_STREAM, 0, sv);

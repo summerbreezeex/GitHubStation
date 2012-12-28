@@ -24,7 +24,7 @@
 #include <assert.h>
 #include <pthread.h>
 
-namespace NET
+namespace FREEZE_NET
 {
     class Mutex
     {

@@ -40,7 +40,7 @@
 #include "Thread.h"
 #include "PollerBase.h"
 
-namespace NET
+namespace FREEZE_NET
 {
 
 	//  This class implements socket polling mechanism using the Linux-specific

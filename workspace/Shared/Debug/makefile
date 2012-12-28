@@ -9,7 +9,10 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir.mk
+-include Utils/subdir.mk
 -include Serialization/subdir.mk
+-include Net/subdir.mk
+-include Db/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

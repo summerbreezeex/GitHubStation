@@ -27,7 +27,7 @@
 #include "Clock.h"
 #include "IPollEvents.h"
 
-namespace NET
+namespace FREEZE_NET
 {
 
 	class PollerBase

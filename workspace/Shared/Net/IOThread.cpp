@@ -23,7 +23,7 @@
 #include "IOThread.h"
 #include "Ctx.h"
 
-NET::IOThread::IOThread(Ctx* ctx, uint32_t tid) :
+FREEZE_NET::IOThread::IOThread(Ctx* ctx, uint32_t tid) :
 	Object(ctx, tid)
 {
 	poller_ = new (std::nothrow) Poller;
@@ -33,33 +33,33 @@ NET::IOThread::IOThread(Ctx* ctx, uint32_t tid) :
 	poller_->SetPollin(mailbox_handle_);
 }
 
-NET::IOThread::~IOThread()
+FREEZE_NET::IOThread::~IOThread()
 {
 	delete poller_;
 }
 
-void NET::IOThread::Start()
+void FREEZE_NET::IOThread::Start()
 {
 	//  Start the underlying I/O thread.
 	poller_->Start();
 }
 
-void NET::IOThread::Stop()
+void FREEZE_NET::IOThread::Stop()
 {
 	SendStop();
 }
 
-NET::Mailbox *NET::IOThread::GetMailbox()
+FREEZE_NET::Mailbox *FREEZE_NET::IOThread::GetMailbox()
 {
 	return &mailbox_;
 }
 
-int NET::IOThread::GetLoad()
+int FREEZE_NET::IOThread::GetLoad()
 {
 	return poller_->GetLoad();
 }
 
-void NET::IOThread::InEvent()
+void FREEZE_NET::IOThread::InEvent()
 {
 	//  TODO: Do we want to limit number of commands I/O thread can
 	//  process in a single go?
@@ -80,25 +80,25 @@ void NET::IOThread::InEvent()
 	}
 }
 
-void NET::IOThread::OutEvent()
+void FREEZE_NET::IOThread::OutEvent()
 {
 	//  We are never polling for POLLOUT here. This function is never called.
 	assert(false);
 }
 
-void NET::IOThread::TimerEvent(int id)
+void FREEZE_NET::IOThread::TimerEvent(int id)
 {
 	//  No timers here. This function is never called.
 	assert(false);
 }
 
-NET::Poller *NET::IOThread::GetPoller()
+FREEZE_NET::Poller *FREEZE_NET::IOThread::GetPoller()
 {
 	assert(poller_ != NULL);
 	return poller_;
 }
 
-void NET::IOThread::ProcessStop()
+void FREEZE_NET::IOThread::ProcessStop()
 {
 	poller_->RmFd(mailbox_handle_);
 	poller_->Stop();

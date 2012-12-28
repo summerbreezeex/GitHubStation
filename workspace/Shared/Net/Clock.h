@@ -23,7 +23,7 @@
 
 #include <stdint.h>
 
-namespace NET
+namespace FREEZE_NET
 {
 
 	class Clock

@@ -33,6 +33,10 @@
 		<item value="227191" key="searchFlags"/>
 		<item value="false" key="caseSensitive"/>
 		<list key="previousPatterns">
+			<item value="CheckTag"/>
+			<item value="__SHARED_NET_CTX_H__"/>
+			<item value="__SHARED_NET_MYSQL_RPC_CLIENT_H__"/>
+			<item value="mysql_rpc_client_"/>
 			<item value="__SHARED_NET_FD_H__"/>
 			<item value="assert"/>
 			<item value="Drain"/>

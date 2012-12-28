@@ -4,6 +4,9 @@
 
 #include "TestCase/TestCase.h"
 #include "MySQLDb/UnitTest.h"
+#include "Net/UnitTest.h"
+#include "RPCMySQL/UnitTest.h"
+
 #include "ByteBuffer.h"
 
 int main (int argc, char *argv [])
@@ -11,7 +14,7 @@ int main (int argc, char *argv [])
 	std::cout << "hello world !" << std::endl;
 
 
-	TestMySQL unit_test;
+	TestRPCMysql unit_test;
 	unit_test.Run();
 
 

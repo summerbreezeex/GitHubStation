@@ -25,15 +25,15 @@
 #include <unistd.h>
 #include <sys/time.h>
 
-NET::Clock::Clock(void)
+FREEZE_NET::Clock::Clock(void)
 {
 }
 
-NET::Clock::~Clock(void)
+FREEZE_NET::Clock::~Clock(void)
 {
 }
 
-uint64_t NET::Clock::NowMS(void)
+uint64_t FREEZE_NET::Clock::NowMS(void)
 {
 	struct timeval tv;
 	int rc = gettimeofday(&tv, NULL);

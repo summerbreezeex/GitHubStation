@@ -1,25 +1,100 @@
 
-**** Build of configuration Release for project Shared ****
+**** Build of configuration Debug for project Shared ****
 
 make all 
+Building file: ../Utils/Guard.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Utils/Guard.d" -MT"Utils/Guard.d" -o"Utils/Guard.o" "../Utils/Guard.cpp"
+Finished building: ../Utils/Guard.cpp
+ 
+Building file: ../Utils/SpinLock.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Utils/SpinLock.d" -MT"Utils/SpinLock.d" -o"Utils/SpinLock.o" "../Utils/SpinLock.cpp"
+Finished building: ../Utils/SpinLock.cpp
+ 
+Building file: ../Serialization/ByteBuffer.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Serialization/ByteBuffer.d" -MT"Serialization/ByteBuffer.d" -o"Serialization/ByteBuffer.o" "../Serialization/ByteBuffer.cpp"
+Finished building: ../Serialization/ByteBuffer.cpp
+ 
+Building file: ../Net/Clock.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Clock.d" -MT"Net/Clock.d" -o"Net/Clock.o" "../Net/Clock.cpp"
+Finished building: ../Net/Clock.cpp
+ 
+Building file: ../Net/Command.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Command.d" -MT"Net/Command.d" -o"Net/Command.o" "../Net/Command.cpp"
+Finished building: ../Net/Command.cpp
+ 
 Building file: ../Net/Ctx.cpp
 Invoking: GCC C++ Compiler
-g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Ctx.d" -MT"Net/Ctx.d" -o"Net/Ctx.o" "../Net/Ctx.cpp"
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Ctx.d" -MT"Net/Ctx.d" -o"Net/Ctx.o" "../Net/Ctx.cpp"
 Finished building: ../Net/Ctx.cpp
+ 
+Building file: ../Net/Epoll.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Epoll.d" -MT"Net/Epoll.d" -o"Net/Epoll.o" "../Net/Epoll.cpp"
+Finished building: ../Net/Epoll.cpp
  
 Building file: ../Net/IOThread.cpp
 Invoking: GCC C++ Compiler
-g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/IOThread.d" -MT"Net/IOThread.d" -o"Net/IOThread.o" "../Net/IOThread.cpp"
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/IOThread.d" -MT"Net/IOThread.d" -o"Net/IOThread.o" "../Net/IOThread.cpp"
 Finished building: ../Net/IOThread.cpp
+ 
+Building file: ../Net/Mailbox.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Mailbox.d" -MT"Net/Mailbox.d" -o"Net/Mailbox.o" "../Net/Mailbox.cpp"
+Finished building: ../Net/Mailbox.cpp
+ 
+Building file: ../Net/MySQLRPCClient.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/MySQLRPCClient.d" -MT"Net/MySQLRPCClient.d" -o"Net/MySQLRPCClient.o" "../Net/MySQLRPCClient.cpp"
+Finished building: ../Net/MySQLRPCClient.cpp
+ 
+Building file: ../Net/MySQLRPCServer.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/MySQLRPCServer.d" -MT"Net/MySQLRPCServer.d" -o"Net/MySQLRPCServer.o" "../Net/MySQLRPCServer.cpp"
+Finished building: ../Net/MySQLRPCServer.cpp
  
 Building file: ../Net/Object.cpp
 Invoking: GCC C++ Compiler
-g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Object.d" -MT"Net/Object.d" -o"Net/Object.o" "../Net/Object.cpp"
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Object.d" -MT"Net/Object.d" -o"Net/Object.o" "../Net/Object.cpp"
 Finished building: ../Net/Object.cpp
+ 
+Building file: ../Net/PollerBase.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/PollerBase.d" -MT"Net/PollerBase.d" -o"Net/PollerBase.o" "../Net/PollerBase.cpp"
+Finished building: ../Net/PollerBase.cpp
+ 
+Building file: ../Net/Signaler.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Signaler.d" -MT"Net/Signaler.d" -o"Net/Signaler.o" "../Net/Signaler.cpp"
+Finished building: ../Net/Signaler.cpp
+ 
+Building file: ../Net/TcpListener.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/TcpListener.d" -MT"Net/TcpListener.d" -o"Net/TcpListener.o" "../Net/TcpListener.cpp"
+Finished building: ../Net/TcpListener.cpp
+ 
+Building file: ../Net/Thread.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/Thread.d" -MT"Net/Thread.d" -o"Net/Thread.o" "../Net/Thread.cpp"
+Finished building: ../Net/Thread.cpp
+ 
+Building file: ../Db/MySQLConnection.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Db/MySQLConnection.d" -MT"Db/MySQLConnection.d" -o"Db/MySQLConnection.o" "../Db/MySQLConnection.cpp"
+Finished building: ../Db/MySQLConnection.cpp
+ 
+Building file: ../Db/ResultSet.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Db/ResultSet.d" -MT"Db/ResultSet.d" -o"Db/ResultSet.o" "../Db/ResultSet.cpp"
+Finished building: ../Db/ResultSet.cpp
  
 Building target: libShared.a
 Invoking: GCC Archiver
-ar -r "libShared.a"  ./Serialization/ByteBuffer.o  ./Net/Clock.o ./Net/Command.o ./Net/Ctx.o ./Net/Epoll.o ./Net/IOThread.o ./Net/Mailbox.o ./Net/Object.o ./Net/PollerBase.o ./Net/Signaler.o ./Net/Thread.o  ./Db/MySQLConnection.o ./Db/ResultSet.o   
+ar -r "libShared.a"  ./Utils/Guard.o ./Utils/SpinLock.o  ./Serialization/ByteBuffer.o  ./Net/Clock.o ./Net/Command.o ./Net/Ctx.o ./Net/Epoll.o ./Net/IOThread.o ./Net/Mailbox.o ./Net/MySQLRPCClient.o ./Net/MySQLRPCServer.o ./Net/Object.o ./Net/PollerBase.o ./Net/Signaler.o ./Net/TcpListener.o ./Net/Thread.o  ./Db/MySQLConnection.o ./Db/ResultSet.o   
+ar: creating libShared.a
 Finished building target: libShared.a
  
-ar: creating libShared.a

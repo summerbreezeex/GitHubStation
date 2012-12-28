@@ -18,31 +18,46 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Ctx.h"
+
 #include <new>
 #include <string.h>
 #include <unistd.h>
 #include <assert.h>
 
 #include "IOThread.h"
-
-#include "Ctx.h"
+#include "MySQLRPCClient.h"
+#include "MySQLRPCServer.h"
 
 #define MAX_SOCKETS (512)
 
-NET::Ctx::Ctx(uint32_t io_threads) :
+FREEZE_NET::Ctx::Ctx(uint32_t io_threads) :
 	tag_(0xbadcafe0), terminating_(false)
 {
 	//  Initialise the array of mailboxes. Additional three slots are for
 	//  internal log socket and the zmq_term thread the reaper thread.
-	slot_count_ = MAX_SOCKETS + io_threads + 3;
+	slot_count_ = MAX_SOCKETS + io_threads + enum_count;
 	slots_ = (Mailbox**) malloc(sizeof(Mailbox*) * slot_count_);
 	assert(slots_ != NULL);
 
 	//  Initialise the infrastructure for zmq_term thread.
 	slots_[term_tid] = &term_mailbox_;
 
+	mysql_rpc_client_ = new (std::nothrow) MySQLRPCClient(this,
+			rpc_mysql_client_tid);
+	assert(mysql_rpc_client_ != NULL);
+	slots_[rpc_mysql_client_tid] = mysql_rpc_client_->GetMailbox();
+	mysql_rpc_client_->Start();
+
+	mysql_rpc_server_ = new (std::nothrow) MySQLRPCServer(this,
+			rpc_mysql_server_tid);
+	assert(mysql_rpc_server_ != NULL);
+	slots_[rpc_mysql_server_tid] = mysql_rpc_server_->GetMailbox();
+	mysql_rpc_server_->Start();
+
+
 	//  Create I/O thread objects and launch them.
-	for (uint32_t i = 2; i != io_threads + 2; i++)
+	for (uint32_t i = enum_count; i != io_threads + enum_count; i++)
 	{
 		IOThread *io_thread = new (std::nothrow) IOThread(this, i);
 		assert(io_thread != NULL);
@@ -52,38 +67,41 @@ NET::Ctx::Ctx(uint32_t io_threads) :
 	}
 
 	//  In the unused part of the slot array, create a list of empty slots.
-	for (int32_t i = (int32_t) slot_count_ - 1; i >= (int32_t) io_threads + 2; i--)
+	for (int32_t i = (int32_t) slot_count_ - 1; i >= (int32_t) io_threads
+			+ enum_count; i--)
 	{
 		empty_slots_.push_back(i);
 		slots_[i] = NULL;
 	}
 }
 
-bool NET::Ctx::CheckTag()
+bool FREEZE_NET::Ctx::CheckTag()
 {
 	return tag_ == 0xbadcafe0;
 }
 
-NET::Ctx::~Ctx()
+FREEZE_NET::Ctx::~Ctx()
 {
 	//  Remove the tag, so that the object is considered dead.
 	tag_ = 0xdeadbeef;
 }
 
-int NET::Ctx::Terminate()
+int FREEZE_NET::Ctx::Terminate()
 {
 	return 0;
 }
 
-void NET::Ctx::SendCommand(uint32_t tid, const Command& command)
+void FREEZE_NET::Ctx::SendCommand(uint32_t tid, const Command& command)
 {
 	slots_[tid]->Send(command);
 }
 
-NET::IOThread *NET::Ctx::ChooseIOThread(uint64_t affinity)
+FREEZE_NET::IOThread *FREEZE_NET::Ctx::ChooseIOThread(uint64_t affinity)
 {
 	if (io_threads_.empty())
+	{
 		return NULL;
+	}
 
 	//  Find the I/O thread with minimum load.
 	int min_load = -1;
@@ -99,5 +117,15 @@ NET::IOThread *NET::Ctx::ChooseIOThread(uint64_t affinity)
 	}
 	assert(min_load != -1);
 	return io_threads_[result];
+}
+
+FREEZE_NET::MySQLRPCClient* FREEZE_NET::Ctx::MysqlRPCClient()
+{
+	return mysql_rpc_client_;
+}
+
+FREEZE_NET::MySQLRPCServer* FREEZE_NET::Ctx::MysqlRPCServer()
+{
+	return mysql_rpc_server_;
 }
 

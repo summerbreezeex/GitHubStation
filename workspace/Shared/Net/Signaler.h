@@ -23,7 +23,7 @@
 
 #include "Fd.h"
 
-namespace NET
+namespace FREEZE_NET
 {
 
     //  This is a cross-platform equivalent to signal_fd. However, as opposed

@@ -1,5 +1,13 @@
-#Sun Dec 23 22:25:49 PST 2012
+#Wed Dec 26 01:38:25 PST 2012
 eclipse.preferences.version=1
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.debug.20936646/CPATH/delimiter=\:
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.debug.20936646/CPATH/operation=remove
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.debug.20936646/CPLUS_INCLUDE_PATH/delimiter=\:
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.debug.20936646/CPLUS_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.debug.20936646/C_INCLUDE_PATH/delimiter=\:
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.debug.20936646/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.debug.20936646/append=true
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.debug.20936646/appendContributed=true
 environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.release.1880462512/CPATH/delimiter=\:
 environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.release.1880462512/CPATH/operation=remove
 environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.lib.release.1880462512/CPLUS_INCLUDE_PATH/delimiter=\:

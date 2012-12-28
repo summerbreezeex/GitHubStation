@@ -23,16 +23,24 @@
 
 #include <stdint.h>
 
-namespace NET
+#include "../Utils/CommandBase.h"
+#include "../Db/MySQLConnection.h"
+
+
+namespace FREEZE_NET
 {
 	//  Base class for all objects that participate in inter-thread
 	//  communication.
+
+	class Ctx;
+	class MySQLRPCClient;
+	class MySQLRPCServer;
 
 	class Object
 	{
 	public:
 
-		Object(class Ctx* ctx, uint32_t tid);
+		Object(Ctx* ctx, uint32_t tid);
 		Object(Object* parent);
 		virtual ~Object();
 
@@ -47,16 +55,32 @@ namespace NET
 
 		//  Derived object can use these functions to send commands
 		//  to other objects.
-        void SendStop();
+		void SendStop();
+
+		void SendRPCMysqlRequest(MySQLRPCServer* destination,
+				uint32_t msg_id, const char* table, const char* query_statement,
+				CommandBaseEx* callback_cmd,
+				ResultSet* query_result,
+				MySQLRPCClient* request_object);
+
+		void SendRPCMysqlResponse(class MySQLRPCClient* destination,
+				uint32_t msg_id, uint8_t return_result,
+				ResultSet* query_result);
 
 		//  These handlers can be overloaded by the derived objects. They are
 		//  called when command arrives from another thread.
 		virtual void ProcessStop();
+		virtual void ProcessRPCMysqlRequest(uint32_t msg_id, const char* table,
+				const char* query_statement, CommandBaseEx* callback_cmd,
+				ResultSet* query_result,
+				MySQLRPCClient* request_object);
+		virtual void ProcessRPCMysqlResponse(uint32_t msg_id, uint8_t return_result,
+				ResultSet* query_result);
 
 	private:
 
 		//  Context provides access to the global state.
-		class Ctx* ctx_;
+		Ctx* ctx_;
 
 		//  Thread ID of the thread the object belongs to.
 		uint32_t tid_;

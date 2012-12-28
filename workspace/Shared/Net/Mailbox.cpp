@@ -18,24 +18,32 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <unistd.h>
+#include <fcntl.h>
+#include <limits.h>
+#include <netinet/tcp.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
 #include <assert.h>
+#include <errno.h>
 
 #include "Mailbox.h"
 
-NET::Mailbox::Mailbox(void)
+FREEZE_NET::Mailbox::Mailbox(void)
 {
 }
 
-NET::Mailbox::~Mailbox(void)
+FREEZE_NET::Mailbox::~Mailbox(void)
 {
 }
 
-NET::fd_t NET::Mailbox::GetFd(void)
+FREEZE_NET::fd_t FREEZE_NET::Mailbox::GetFd(void)
 {
 	return signaler_.GetFd();
 }
 
-void NET::Mailbox::Send(const Command& cmd)
+void FREEZE_NET::Mailbox::Send(const Command& cmd)
 {
 	sync_.Lock();
 	this->cpipe_.push_back(cmd);
@@ -44,7 +52,7 @@ void NET::Mailbox::Send(const Command& cmd)
 	signaler_.Send();
 }
 
-int NET::Mailbox::Recv(Command* cmd)
+int FREEZE_NET::Mailbox::Recv(Command* cmd)
 {
 	signaler_.Recv();
 
@@ -59,6 +67,7 @@ int NET::Mailbox::Recv(Command* cmd)
 		return 0;
 	}
 
+	errno = EAGAIN;
 	sync_.Unlock();
 	return -1;
 

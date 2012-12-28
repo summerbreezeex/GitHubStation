@@ -3,36 +3,36 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="312" key="DIALOG_WIDTH"/>
 		<item value="134" key="DIALOG_Y_ORIGIN"/>
-		<item value="783" key="DIALOG_X_ORIGIN"/>
 		<item value="428" key="DIALOG_HEIGHT"/>
+		<item value="783" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
-		<item value="false" key="wholeword"/>
-		<item value="Poller" key="selection"/>
+		<item value="true" key="wholeword"/>
+		<item value="ProcessRPCMysqlResponse" key="selection"/>
 		<list key="findhistory">
-			<item value="poller_t"/>
-			<item value="io_thread_t"/>
-			<item value="command_t"/>
-			<item value="mailbox_t"/>
+			<item value="ProcessRPCMysqlResponse"/>
+			<item value="MySQLRPCClient"/>
+			<item value="IOThread"/>
+			<item value="FREEZE_NET::"/>
+			<item value="tcp_listener_t"/>
 			<item value="zmq"/>
-			<item value="object_t"/>
-			<item value="i_poll_events"/>
-			<item value="epoll_t"/>
+			<item value="tTcpListener"/>
+			<item value="NET"/>
 		</list>
 		<list key="replacehistory">
+			<item value="MySQLRPCServer"/>
+			<item value="/*&#x0A; Copyright (c) 2007-2011 iMatix Corporation&#x0A; Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file&#x0A;&#x0A; This file is part of 0MQ.&#x0A;&#x0A; 0MQ is free software; you can redistribute it and/or modify it under&#x0A; the terms of the GNU Lesser General Public License as published by&#x0A; the Free Software Foundation; either version 3 of the License, or&#x0A; (at your option) any later version.&#x0A;&#x0A; 0MQ is distributed in the hope that it will be useful,&#x0A; but WITHOUT ANY WARRANTY; without even the implied warranty of&#x0A; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#x0A; GNU Lesser General Public License for more details.&#x0A;&#x0A; You should have received a copy of the GNU Lesser General Public License&#x0A; along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.&#x0A; */&#x0A;&#x0A;#include &lt;new&gt;&#x0A;&#x0A;#include &quot;MySQLRPCClient.h&quot;&#x0A;#include &quot;Ctx.h&quot;&#x0A;&#x0A;FREEZE_NET::MySQLRPCClient::MySQLRPCClient(Ctx* ctx, uint32_t tid) :&#x0A;&#x09;Object(ctx, tid)&#x0A;{&#x0A;&#x09;poller_ = new (std::nothrow) Poller;&#x0A;&#x09;assert(poller_ != NULL);&#x0A;&#x0A;&#x09;mailbox_handle_ = poller_-&gt;AddFd(mailbox_.GetFd(), this);&#x0A;&#x09;poller_-&gt;SetPollin(mailbox_handle_);&#x0A;}&#x0A;&#x0A;FREEZE_NET::MySQLRPCClient::~MySQLRPCClient()&#x0A;{&#x0A;&#x09;delete poller_;&#x0A;}&#x0A;&#x0A;void FREEZE_NET::MySQLRPCClient::Start()&#x0A;{&#x0A;&#x09;//  Start the underlying I/O thread.&#x0A;&#x09;poller_-&gt;Start();&#x0A;}&#x0A;&#x0A;void FREEZE_NET::MySQLRPCClient::Stop()&#x0A;{&#x0A;&#x09;SendStop();&#x0A;}&#x0A;&#x0A;FREEZE_NET::Mailbox *FREEZE_NET::MySQLRPCClient::GetMailbox()&#x0A;{&#x0A;&#x09;return &amp;mailbox_;&#x0A;}&#x0A;&#x0A;int FREEZE_NET::MySQLRPCClient::GetLoad()&#x0A;{&#x0A;&#x09;return poller_-&gt;GetLoad();&#x0A;}&#x0A;&#x0A;void FREEZE_NET::MySQLRPCClient::InEvent()&#x0A;{&#x0A;&#x09;//  TODO: Do we want to limit number of commands I/O thread can&#x0A;&#x09;//  process in a single go?&#x0A;&#x0A;&#x09;while (true)&#x0A;&#x09;{&#x0A;&#x09;&#x09;//  Get the next command. If there is none, exit.&#x0A;&#x09;&#x09;Command cmd;&#x0A;&#x09;&#x09;int rc = mailbox_.Recv(&amp;cmd);&#x0A;&#x09;&#x09;if (rc != 0 &amp;&amp; errno == EINTR)&#x0A;&#x09;&#x09;&#x09;continue;&#x0A;&#x09;&#x09;if (rc != 0 &amp;&amp; errno == EAGAIN)&#x0A;&#x09;&#x09;&#x09;break;&#x0A;&#x09;&#x09;assert (rc == 0);&#x0A;&#x0A;&#x09;&#x09;//  Process the command.&#x0A;&#x09;&#x09;cmd.destination_-&gt;ProcessCommand(cmd);&#x0A;&#x09;}&#x0A;}&#x0A;&#x0A;void FREEZE_NET::MySQLRPCClient::OutEvent()&#x0A;{&#x0A;&#x09;//  We are never polling for POLLOUT here. This function is never called.&#x0A;&#x09;assert(false);&#x0A;}&#x0A;&#x0A;void FREEZE_NET::MySQLRPCClient::TimerEvent(int id)&#x0A;{&#x0A;&#x09;//  No timers here. This function is never called.&#x0A;&#x09;assert(false);&#x0A;}&#x0A;&#x0A;FREEZE_NET::Poller *FREEZE_NET::MySQLRPCClient::GetPoller()&#x0A;{&#x0A;&#x09;assert(poller_ !"/>
+			<item value="MySQLRPCClient"/>
+			<item value=""/>
+			<item value="TcpListener"/>
+			<item value="FREEZE_NET"/>
+			<item value="tTcpListener"/>
 			<item value="Poller"/>
-			<item value="IOThread"/>
-			<item value="Command"/>
-			<item value="Mailbox"/>
-			<item value="NET"/>
-			<item value="Object"/>
-			<item value="IPollEvents"/>
-			<item value="Epoll"/>
 		</list>
 	</section>
 </section>

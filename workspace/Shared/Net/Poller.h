@@ -23,7 +23,7 @@
 
 #include "Epoll.h"
 
-namespace NET
+namespace FREEZE_NET
 {
     typedef Epoll Poller;
 }

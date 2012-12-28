@@ -26,5 +26,7 @@ SUBDIRS := \
 . \
 TestCase \
 Serialization \
+RPCMySQL \
+Net \
 MySQLDb \
 

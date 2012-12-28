@@ -21,7 +21,9 @@
 #ifndef __SHARED_NET_FD_H__
 #define __SHARED_NET_FD_H__
 
-namespace NET
+#include <stdint.h>
+
+namespace FREEZE_NET
 {
 	typedef int fd_t;
     enum {retired_fd = -1};

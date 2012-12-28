@@ -1,5 +1,39 @@
 
-**** Build of configuration Release for project UnitTest ****
+**** Build of configuration Debug for project UnitTest ****
 
 make all 
-make: Nothing to be done for `all'.
+Building file: ../main.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/workspace/Shared/Serialization -I/home/cent/workspace/Shared -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"main.d" -MT"main.d" -o"main.o" "../main.cpp"
+Finished building: ../main.cpp
+ 
+Building file: ../TestCase/TestCase.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/workspace/Shared/Serialization -I/home/cent/workspace/Shared -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"TestCase/TestCase.d" -MT"TestCase/TestCase.d" -o"TestCase/TestCase.o" "../TestCase/TestCase.cpp"
+Finished building: ../TestCase/TestCase.cpp
+ 
+Building file: ../Serialization/SerializationTest.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/workspace/Shared/Serialization -I/home/cent/workspace/Shared -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Serialization/SerializationTest.d" -MT"Serialization/SerializationTest.d" -o"Serialization/SerializationTest.o" "../Serialization/SerializationTest.cpp"
+Finished building: ../Serialization/SerializationTest.cpp
+ 
+Building file: ../RPCMySQL/UnitTest.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/workspace/Shared/Serialization -I/home/cent/workspace/Shared -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"RPCMySQL/UnitTest.d" -MT"RPCMySQL/UnitTest.d" -o"RPCMySQL/UnitTest.o" "../RPCMySQL/UnitTest.cpp"
+Finished building: ../RPCMySQL/UnitTest.cpp
+ 
+Building file: ../Net/UnitTest.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/workspace/Shared/Serialization -I/home/cent/workspace/Shared -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Net/UnitTest.d" -MT"Net/UnitTest.d" -o"Net/UnitTest.o" "../Net/UnitTest.cpp"
+Finished building: ../Net/UnitTest.cpp
+ 
+Building file: ../MySQLDb/UintTest.cpp
+Invoking: GCC C++ Compiler
+g++ -I/home/cent/workspace/Shared/Serialization -I/home/cent/workspace/Shared -I/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/include -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"MySQLDb/UintTest.d" -MT"MySQLDb/UintTest.d" -o"MySQLDb/UintTest.o" "../MySQLDb/UintTest.cpp"
+Finished building: ../MySQLDb/UintTest.cpp
+ 
+Building target: UnitTest
+Invoking: GCC C++ Linker
+g++ -L/home/cent/workspace/Shared/Debug -L/home/cent/mysql-connector-c-6.0.2-linux-glibc2.3-x86-32bit/lib -o"UnitTest"  ./main.o  ./TestCase/TestCase.o  ./Serialization/SerializationTest.o  ./RPCMySQL/UnitTest.o  ./Net/UnitTest.o  ./MySQLDb/UintTest.o   -lShared -lmysqlclient
+Finished building target: UnitTest
+ 

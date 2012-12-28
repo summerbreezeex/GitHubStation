@@ -27,13 +27,13 @@ extern "C"
 {
 	static void *thread_routine(void *arg)
 	{
-		NET::Thread *self = (NET::Thread*)arg;
+		FREEZE_NET::Thread *self = (FREEZE_NET::Thread*)arg;
 		self->tfn_(self->arg_);
 		return NULL;
 	}
 }
 
-void NET::Thread::Start(thread_fn *tfn, void *arg)
+void FREEZE_NET::Thread::Start(thread_fn *tfn, void *arg)
 {
 	tfn_ = tfn;
 	arg_ = arg;
@@ -41,7 +41,7 @@ void NET::Thread::Start(thread_fn *tfn, void *arg)
 	assert(rc == 0);
 }
 
-void NET::Thread::Stop(void)
+void FREEZE_NET::Thread::Stop(void)
 {
 	int rc = pthread_join(descriptor_, NULL);
 	assert(rc == 0);

@@ -22,22 +22,22 @@
 
 #include <assert.h>
 
-NET::PollerBase::PollerBase(void)
+FREEZE_NET::PollerBase::PollerBase(void)
 {
 }
 
-NET::PollerBase::~PollerBase(void)
+FREEZE_NET::PollerBase::~PollerBase(void)
 {
 	//  Make sure there is no more load on the shutdown.
 	assert(GetLoad() == 0);
 }
 
-int NET::PollerBase::GetLoad(void)
+int FREEZE_NET::PollerBase::GetLoad(void)
 {
 	return load_.Get();
 }
 
-void NET::PollerBase::AdjustLoad(int amount)
+void FREEZE_NET::PollerBase::AdjustLoad(int amount)
 {
 	if (amount > 0)
 	{
@@ -49,14 +49,14 @@ void NET::PollerBase::AdjustLoad(int amount)
 	}
 }
 
-void NET::PollerBase::AddTimer(int timeout, IPollEvents* sink, int id)
+void FREEZE_NET::PollerBase::AddTimer(int timeout, IPollEvents* sink, int id)
 {
 	uint64_t expiration = clock_.NowMS() + timeout;
 	timer_info_t info = { sink, id };
 	timers_.insert(timers_t::value_type(expiration, info));
 }
 
-void NET::PollerBase::CancelTimer(IPollEvents* sink, int id)
+void FREEZE_NET::PollerBase::CancelTimer(IPollEvents* sink, int id)
 {
 	//  Complexity of this operation is O(n). We assume it is rarely used.
 	for (timers_t::iterator it = timers_.begin(); it != timers_.end(); ++it)
@@ -69,7 +69,7 @@ void NET::PollerBase::CancelTimer(IPollEvents* sink, int id)
 	}
 }
 
-uint64_t NET::PollerBase::ExecuteTimers()
+uint64_t FREEZE_NET::PollerBase::ExecuteTimers()
 {
 	//  Fast track.
 	if (timers_.empty())

@@ -23,7 +23,7 @@
 
 #include <pthread.h>
 
-namespace NET
+namespace FREEZE_NET
 {
 
 	typedef void ( thread_fn)(void*);

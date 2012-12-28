@@ -29,7 +29,7 @@
 #include "Command.h"
 #include "Mutex.h"
 
-namespace NET
+namespace FREEZE_NET
 {
 
     class Mailbox

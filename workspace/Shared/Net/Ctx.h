@@ -31,11 +31,12 @@
 #include "Mutex.h"
 #include "Thread.h"
 
-namespace NET
+namespace FREEZE_NET
 {
-
 	//  Context object encapsulates all the global state associated with
 	//  the library.
+
+    class MySQLRPCServer;
 
 	class Ctx
 	{
@@ -62,12 +63,20 @@ namespace NET
 		//  Returns NULL is no I/O thread is available.
 		class IOThread* ChooseIOThread(uint64_t affinity);
 
+        class MySQLRPCClient* MysqlRPCClient();
+        MySQLRPCServer* MysqlRPCServer();
+
 		enum
 		{
 			term_tid = 0,
+			rpc_mysql_client_tid = 1,
+			rpc_mysql_server_tid = 2,
+			enum_count
 		};
 
 		~Ctx();
+
+
 	private:
 
 		//  Used to check whether the object is a context.
@@ -92,6 +101,10 @@ namespace NET
 
 		Ctx(const Ctx&);
 		const Ctx& operator=(const Ctx&);
+
+	public:
+        class MySQLRPCClient* mysql_rpc_client_;
+        MySQLRPCServer* mysql_rpc_server_;
 	};
 
 }

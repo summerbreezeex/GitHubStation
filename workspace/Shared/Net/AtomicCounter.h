@@ -25,7 +25,7 @@
 
 #include "Mutex.h"
 
-namespace NET
+namespace FREEZE_NET
 {
 
 	//  This class represents an integer that can be incremented/decremented

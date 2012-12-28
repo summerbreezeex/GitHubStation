@@ -6,6 +6,18 @@
 	</section>
 	<section name="NewWizardAction">
 	</section>
+	<section name="ShowViewDialog">
+		<item value="278" key="DIALOG_WIDTH"/>
+		<item value="org.eclipse.jdt.debug.ui.DisplayView" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
+		<item value="133" key="DIALOG_Y_ORIGIN"/>
+		<item value="442" key="DIALOG_HEIGHT"/>
+		<item value="583" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		<list key="ShowViewDialog.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.ui"/>
+			<item value="org.eclipse.debug.ui"/>
+		</list>
+	</section>
 	<section name="ImportExportAction">
 	</section>
 </section>

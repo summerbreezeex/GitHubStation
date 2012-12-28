@@ -29,17 +29,18 @@
 #include "IPollEvents.h"
 #include "Mailbox.h"
 
-namespace NET
+namespace FREEZE_NET
 {
 
 	//  Generic part of the I/O thread. Polling-mechanism-specific features
 	//  are implemented in separate "polling objects".
 
+	class Ctx;
 	class IOThread: public Object, public IPollEvents
 	{
 	public:
 
-		IOThread(class Ctx* ctx, uint32_t tid);
+		IOThread(Ctx* ctx, uint32_t tid);
 
 		//  Clean-up. If the thread was started, it's neccessary to call 'stop'
 		//  before invoking destructor. Otherwise the destructor would hang up.

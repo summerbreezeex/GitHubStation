@@ -29,14 +29,14 @@
 
 #include "IPollEvents.h"
 
-NET::Epoll::Epoll() :
+FREEZE_NET::Epoll::Epoll() :
 	stopping_(false)
 {
 	epoll_fd_ = epoll_create(1);
 	assert(epoll_fd_ != -1);
 }
 
-NET::Epoll::~Epoll()
+FREEZE_NET::Epoll::~Epoll()
 {
 	//  Wait till the worker thread exits.
 	worker_.Stop();
@@ -49,7 +49,7 @@ NET::Epoll::~Epoll()
 
 }
 
-NET::Epoll::handle_t NET::Epoll::AddFd(fd_t fd, IPollEvents* events)
+FREEZE_NET::Epoll::handle_t FREEZE_NET::Epoll::AddFd(fd_t fd, IPollEvents* events)
 {
 	poll_entry_t *pe = new (std::nothrow) poll_entry_t;
 	assert(pe != NULL);
@@ -72,7 +72,7 @@ NET::Epoll::handle_t NET::Epoll::AddFd(fd_t fd, IPollEvents* events)
 	return pe;
 }
 
-void NET::Epoll::RmFd(handle_t handle)
+void FREEZE_NET::Epoll::RmFd(handle_t handle)
 {
 	poll_entry_t *pe = (poll_entry_t*) handle;
 	int rc = epoll_ctl(epoll_fd_, EPOLL_CTL_DEL, pe->fd_, &pe->ev_);
@@ -84,7 +84,7 @@ void NET::Epoll::RmFd(handle_t handle)
 	AdjustLoad(-1);
 }
 
-void NET::Epoll::SetPollin(handle_t handle)
+void FREEZE_NET::Epoll::SetPollin(handle_t handle)
 {
 	poll_entry_t *pe = (poll_entry_t*) handle;
 	pe->ev_.events |= EPOLLIN;
@@ -92,7 +92,7 @@ void NET::Epoll::SetPollin(handle_t handle)
 	assert(rc != -1);
 }
 
-void NET::Epoll::ResetPollin(handle_t handle)
+void FREEZE_NET::Epoll::ResetPollin(handle_t handle)
 {
 	poll_entry_t *pe = (poll_entry_t*) handle;
 	pe->ev_.events &= ~((short) EPOLLIN);
@@ -100,7 +100,7 @@ void NET::Epoll::ResetPollin(handle_t handle)
 	assert(rc != -1);
 }
 
-void NET::Epoll::SetPollout(handle_t handle)
+void FREEZE_NET::Epoll::SetPollout(handle_t handle)
 {
 	poll_entry_t *pe = (poll_entry_t*) handle;
 	pe->ev_.events |= EPOLLOUT;
@@ -108,7 +108,7 @@ void NET::Epoll::SetPollout(handle_t handle)
 	assert(rc != -1);
 }
 
-void NET::Epoll::ResetPollout(handle_t handle)
+void FREEZE_NET::Epoll::ResetPollout(handle_t handle)
 {
 	poll_entry_t *pe = (poll_entry_t*) handle;
 	pe->ev_.events &= ~((short) EPOLLOUT);
@@ -116,17 +116,17 @@ void NET::Epoll::ResetPollout(handle_t handle)
 	assert(rc != -1);
 }
 
-void NET::Epoll::Start()
+void FREEZE_NET::Epoll::Start()
 {
 	worker_.Start(worker_routine, this);
 }
 
-void NET::Epoll::Stop()
+void FREEZE_NET::Epoll::Stop()
 {
 	stopping_ = true;
 }
 
-void NET::Epoll::Loop()
+void FREEZE_NET::Epoll::Loop()
 {
 	epoll_event ev_buf[256];
 
@@ -188,7 +188,7 @@ void NET::Epoll::Loop()
 	}
 }
 
-void NET::Epoll::worker_routine(void *arg)
+void FREEZE_NET::Epoll::worker_routine(void *arg)
 {
 	((Epoll*) arg)->Loop();
 }

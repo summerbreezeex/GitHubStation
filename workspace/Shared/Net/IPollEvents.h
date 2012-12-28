@@ -1,7 +1,7 @@
 #ifndef __SHARED_NET_IPollEvents_H__
 #define __SHARED_NET_IPollEvents_H__
 
-namespace NET
+namespace FREEZE_NET
 {
 
 	// Virtual interface to be exposed by object that want to be notified
